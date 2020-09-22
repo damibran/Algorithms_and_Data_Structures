@@ -1,0 +1,2 @@
+C:\Users\olege\Desktop\АиСД\First\x64\Debug\First.exe
+C:\Users\olege\Desktop\АиСД\First\x64\Debug\First.pdb
