@@ -21,7 +21,12 @@ void str_to_list(list* head, string in);
 void and_m(list* a, list* b, list* e);
 void sub_m(list* e, list* c);
 void unite_m(list* e, list* d);
-long int str_to_univers(string in);
+long int str_to_univers_word(string in);
+char* univers_to_str_word(long int in);
+char* univers_to_str_array(bool* in);
+bool* str_to_univers_array(string in);
+void and_arrays(bool* a, bool* b, bool* e);
+
 
 int main()
 {
@@ -51,44 +56,136 @@ int main()
 	getline(cin, in);
 	str_to_list(d, in);*/
 
-	char U[26];
-	long int a;
-
-	for(int i=0;i<26;i++)
-	{
-		U[i] = i + 'a';
-	}
+	/*long int a;
+	long int b;
+	long int c;
+	long int d;
+	long int e;
 
 	printf("Enter mnozestvo:\n");
 	getline(cin, in);
-	a=str_to_univers(in);
+	a=str_to_univers_word(in);
 
-	cout << a;
+	printf("Enter mnozestvo:\n");
+	getline(cin, in);
+	b = str_to_univers_word(in);
+
+	printf("Enter mnozestvo:\n");
+	getline(cin, in);
+	c = str_to_univers_word(in);
+
+	printf("Enter mnozestvo:\n");
+	getline(cin, in);
+	d = str_to_univers_word(in);
+	
+	e = a & b;
+	e = (e | c) & (~c);
+	e = e | d;
+	
+	char* res = new char(26);
+
+	res = univers_to_str_word(e);
+
+	cout << res;*/
+
+	bool* a;
+	bool* b;
+	bool* c;
+	bool* d;
+	bool* e = new bool[26];
+	
+	printf("Enter mnozestvo:\n");
+	getline(cin, in);
+	a = str_to_univers_array(in);
+
+	printf("Enter mnozestvo:\n");
+	getline(cin, in);
+	b = str_to_univers_array(in);
 
 	/*printf("Enter mnozestvo:\n");
 	getline(cin, in);
-	str_to_list(b, in);
+	c = str_to_univers_array(in);
 
 	printf("Enter mnozestvo:\n");
 	getline(cin, in);
-	str_to_list(c, in);
+	d = str_to_univers_array(in);*/
 
-	printf("Enter mnozestvo:\n");
-	getline(cin, in);
-	str_to_list(d, in);*/
+	and_arrays(a, b, e);
 
+	
 
+	char* res = new char[26];
+	res = univers_to_str_array(e);
+	cout << res;
 
 	system("pause");
 }
 
-long int str_to_univers(string in)
+void and_arrays(bool *a,bool *b,bool * e)
+{
+	for(int i=0;i<26;i++)
+	{
+		e[i] = bool(a[i] && b[i]);
+	}
+}
+
+char* univers_to_str_array(bool* in)
+{
+	char* k = new char[26];
+	int m = 0;
+
+	for(int i=0;i<26;i++)
+	{
+		if(in[i]==true)//ПРОБЛЕМА РАБОТЕТ ВСЕГДА ХЗ ПОЧ
+		{
+			k[m++] = 'a' + i;
+		}
+	}
+	k[m] = '\0';
+	return k;
+}
+
+bool* str_to_univers_array(string in)
+{
+	bool* k = new bool[26];
+	
+	for(char c: in)
+	{
+		if (c != 0) 
+		{
+			k[int(c) - 97] = true;
+		}
+	}
+
+	return k;
+}
+
+char* univers_to_str_word(long int in)
+{
+	char* k=new char[26];
+
+	int m = 0;
+	for(int i=0;i<26;i++){
+		if(in%2==1)
+			k[m++] = 'a' + i;
+		in = in/2;
+	}
+
+	k[m] = '\0';
+
+	return k;
+}
+
+long int str_to_univers_word(string in)
 {
 	long int k = 0;;
+	
 
-	for (int i = 0; i < 26; i++)
+	for(char c : in)
 	{
-		k = k || (1 << i);
+		if (c != 0) {
+			k = k | (1 << (int(c) - 97));
+		}
 	}
 	return k;
 }

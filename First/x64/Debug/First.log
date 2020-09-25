@@ -1,2 +1,4 @@
 ﻿  First.cpp
-  First.vcxproj -> C:\Users\olege\Desktop\АиСД\First\x64\Debug\First.exe
+C:\Users\olege\Desktop\Algorithms_and_Data_Structures\First\First.cpp(93,8): warning C4101: c: неиспользованная локальная переменная
+C:\Users\olege\Desktop\Algorithms_and_Data_Structures\First\First.cpp(94,8): warning C4101: d: неиспользованная локальная переменная
+  First.vcxproj -> C:\Users\olege\Desktop\Algorithms_and_Data_Structures\First\x64\Debug\First.exe
