@@ -2,7 +2,6 @@
 //
 
 #include <iostream>
-#include <string>
 using namespace std;
 
 struct list {
@@ -29,14 +28,14 @@ void and_bool_array(bool* a, bool* b, bool* e);
 void initialize_bool(bool* a);
 void sub_bool_array(bool* e, bool* c);
 void unite_bool_array(bool* e, bool* d);
-void proc_by_word(string in[4]);
-void proc_by_list(string in[4]);
-void proc_by_bool_array(string in[4]);
+void proc_by_word(char in[4][26]);
+void proc_by_list(char in[4][26]);
+void proc_by_bool_array(char in[4][26]);
 
 int main()
 {
 	// A&&B\\C||D
-	string in[] = { "qwerty","yasedfq","jen","oky" };
+	char in[4][26] = { "qwerty","yasedfq","jen","oky" };
 
 	proc_by_word(in);
 	cout << "\n";
@@ -48,7 +47,7 @@ int main()
 }
 
 
-void proc_by_bool_array(string in[4])
+void proc_by_bool_array(char in[4][26])
 {
 	bool* a;
 	bool* b;
@@ -77,7 +76,7 @@ void proc_by_bool_array(string in[4])
 	cout << res;
 }
 
-void proc_by_word(string in[4])
+void proc_by_word(char in[4][26])
 {
 	long int a;
 	long int b;
@@ -104,7 +103,7 @@ void proc_by_word(string in[4])
 	cout << res;
 }
 
-void proc_by_list(string in[4])
+void proc_by_list(char in[4][26])
 {
 	list* a = new list('#');
 	list* b = new list('#');
