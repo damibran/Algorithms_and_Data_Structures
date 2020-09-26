@@ -25,7 +25,10 @@ long int str_to_univers_word(string in);
 char* univers_to_str_word(long int in);
 char* univers_to_str_array(bool* in);
 bool* str_to_univers_array(string in);
-void and_arrays(bool* a, bool* b, bool* e);
+void and_bool_array(bool* a, bool* b, bool* e);
+void initialize_bool(bool* a);
+void sub_bool_array(bool* e, bool* c);
+void unite_bool_array(bool* e, bool* d);
 
 
 int main()
@@ -102,17 +105,21 @@ int main()
 	getline(cin, in);
 	b = str_to_univers_array(in);
 
-	/*printf("Enter mnozestvo:\n");
+	printf("Enter mnozestvo:\n");
 	getline(cin, in);
 	c = str_to_univers_array(in);
 
 	printf("Enter mnozestvo:\n");
 	getline(cin, in);
-	d = str_to_univers_array(in);*/
+	d = str_to_univers_array(in);
 
-	and_arrays(a, b, e);
+	e = str_to_univers_array("");
 
-	
+	and_bool_array(a, b, e);
+
+	sub_bool_array(e, c);
+
+	unite_bool_array(e, d);
 
 	char* res = new char[26];
 	res = univers_to_str_array(e);
@@ -121,12 +128,29 @@ int main()
 	system("pause");
 }
 
-void and_arrays(bool *a,bool *b,bool * e)
+void unite_bool_array(bool*e,bool*d)
+{
+	for (int i = 0; i < 26; i++)
+		e[i] = e[i] || d[i];
+}
+
+void sub_bool_array(bool*e,bool*c)
+{
+	for (int i = 0; i < 26; i++) 
+		e[i] = ((e[i] || c[i]) && !c[i]);
+		
+}
+
+void initialize_bool(bool*a)
+{
+	for (int i = 0; i < 26; i++)
+		a[i] = false;
+}
+
+void and_bool_array(bool *a,bool *b,bool * e)
 {
 	for(int i=0;i<26;i++)
-	{
 		e[i] = bool(a[i] && b[i]);
-	}
 }
 
 char* univers_to_str_array(bool* in)
@@ -135,12 +159,9 @@ char* univers_to_str_array(bool* in)
 	int m = 0;
 
 	for(int i=0;i<26;i++)
-	{
-		if(in[i]==true)//ПРОБЛЕМА РАБОТЕТ ВСЕГДА ХЗ ПОЧ
-		{
+		if(in[i])
 			k[m++] = 'a' + i;
-		}
-	}
+
 	k[m] = '\0';
 	return k;
 }
@@ -148,14 +169,12 @@ char* univers_to_str_array(bool* in)
 bool* str_to_univers_array(string in)
 {
 	bool* k = new bool[26];
-	
+
+	initialize_bool(k);
+
 	for(char c: in)
-	{
 		if (c != 0) 
-		{
 			k[int(c) - 97] = true;
-		}
-	}
 
 	return k;
 }
@@ -180,13 +199,10 @@ long int str_to_univers_word(string in)
 {
 	long int k = 0;;
 	
-
 	for(char c : in)
-	{
-		if (c != 0) {
+		if (c != 0)
 			k = k | (1 << (int(c) - 97));
-		}
-	}
+
 	return k;
 }
 
@@ -218,9 +234,8 @@ void unite_m(list* e,list *d)
 		while (curE != nullptr)
 		{
 			if (curE->el == curD->el)
-			{
 				flag = true;
-			}
+
 			curE = curE->next;
 		}
 		if (!flag)
@@ -240,9 +255,8 @@ void and_m(list* a, list* b, list* e)
 		while (curB != nullptr)
 		{
 			if (curA->el == curB->el)
-			{
 				add(&e, curA->el);
-			}
+
 			curB = curB->next;
 		}
 		curA = curA->next;
@@ -270,10 +284,7 @@ void sub_m(list* e, list* c)
 						curE = e->next;
 					}
 					else
-					{
 						delete_elem(curE, e);
-					}
-
 				}
 				else
 				{
@@ -313,9 +324,7 @@ int len(list* head)
 void str_to_list(list* head, string in)
 {
 	for (int i = 0; i < in.length(); i++)
-	{
 		add(&head, in[i]);
-	}
 }
 
 void print_list(list* head)
@@ -367,15 +376,3 @@ list* delete_elem(list* lst, list* root)
 	return(temp);
 
 }
-
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
