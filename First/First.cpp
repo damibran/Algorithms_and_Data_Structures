@@ -47,46 +47,46 @@ int main()
 	//clock_t start, stop;
 	// A&&B\\C||D
 	srand(time(0));
-	//for (int i = 0; i < 1000000; i++) {
+	for (int i = 0; i < 1000000; i++) {
 		char** in = new char* [4];
-		/*for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			in[i] = generate_union();
 		}
 
-		for (int i = 0; i < 4; i++)
+		/*for (int i = 0; i < 4; i++)
 			cout << in[i] << '\n';*/
 
-		for (int i = 0; i < 4; i++)
+		/*for (int i = 0; i < 4; i++)
 			in[i] = new char[26];
 
 		strcpy_s(in[0],sizeof(char)*26, "jhrnmcygkzxao");
 		strcpy_s(in[1], sizeof(char) * 26,"scxdjwf");
 		strcpy_s(in[2], sizeof(char) * 26,"gjbnwmcyxhu");
-		strcpy_s(in[3], sizeof(char) * 26,"lcjs");
+		strcpy_s(in[3], sizeof(char) * 26,"lcjs");*/
 
 
-		cout << "/////////////////////////////////////\n";
+		//cout << "/////////////////////////////////////\n";
 		//start = clock();
 
 		proc_by_word(in);
-		cout << "\n";
+		//cout << "\n";
 		proc_by_bool_array(in);
-		cout << "\n";
+		//cout << "\n";
 		proc_by_list(in);
 		proc_by_array(in);
-		cout << endl;
+		//cout << endl;
 
 		//stop = clock();
 
 		//cout << (float)(stop-start)/CLK_TCK;
 		for(int i =0;i<4;i++)
 		{
-			free(in[i]);
+			delete[] in[i];
 		}
-		free(in);
-		cout << endl;
-	//}
+		delete[] in;
+		//cout << endl;
+	}
 	system("pause");
 	return 0;
 }
@@ -107,6 +107,7 @@ char* generate_union() {
 		}
 	}
 	St[l] = '\0';
+	delete[] S;
 	return St;
 }
 
@@ -136,7 +137,14 @@ void proc_by_bool_array(char **in)
 
 	char* res = new char[26];
 	res = univers_to_str_array(e);
-	cout << res;
+
+	delete[] res;
+	delete[] a;
+	delete[] b;
+	delete[] c;
+	delete[] d;
+	delete[] e;
+	//cout << res;
 }
 
 void proc_by_word(char** in)
@@ -159,11 +167,11 @@ void proc_by_word(char** in)
 	e = (e | c) & (~c);
 	e = e | d;
 
-	char* res = new char(26);
+	char* res = new char[26];
 
 	res = univers_to_str_word(e);
-
-	cout << res;
+	delete[] res;
+	//cout << res;
 }
 
 void proc_by_list(char **in)
@@ -184,14 +192,19 @@ void proc_by_list(char **in)
 	str_to_list(d, in[3]);
 
 	and_list(a, b, e);
-	printf("And: ");
-	print_list(e);
+//	print_list(e);
 
 	sub_list(e, c);
 
 	unite_list(e, d);
 
-	print_list(e);
+	delete a;
+	delete b;
+	delete c;
+	delete d;
+	delete e;
+
+	//print_list(e);
 }
 
 void proc_by_array(char **in)
@@ -204,7 +217,9 @@ void proc_by_array(char **in)
 	
 	unite_array(e, in[3]);
 
-	cout << e;
+	delete[] e;
+
+	//cout << e;
 }
 
 void unite_bool_array(bool* e, bool* d)
@@ -331,48 +346,21 @@ void sub_list(list* e, list* c)
 {
 	list* curE = e->next;
 	list* curC = c->next;
-	list* prev = nullptr;
-
-	while (curE != nullptr)
+	
+	while(curE!=nullptr)
 	{
-		list* curC = c->next;
-		while (curC != nullptr)
+		curC = c->next;
+		while(curC!=nullptr)
 		{
-			if (curE != nullptr&& (curE->el == curC->el))
+			if(curE->el==curC->el)
 			{
-				if (prev == nullptr)
-				{
-					if (curE == e->next)
-					{
-						delete_elem(curE, e);
-						curE = e->next;
-						cout << "1";
-					}
-					else {
-						delete_elem(curE, e);
-						cout << "2";
-					}
-				}
-				else
-				{
-					delete_elem(curE, e);
-					curE = prev;
-					cout << "3";
-				}
+				curE=delete_elem(curE, e);
 			}
-			cout << "4";
 			curC = curC->next;
 		}
-		if (curE == nullptr)
-		{
-			curE = e->next;
-		}
-		else
-		{
-			prev = curE;
-			curE = curE->next;
-		}
+		curE = curE->next;
 	}
+	
 }
 
 int len(list* head)
