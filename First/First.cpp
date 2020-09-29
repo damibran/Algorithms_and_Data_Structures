@@ -2,6 +2,8 @@
 //
 
 #include <iostream>
+#include <time.h>
+#include <cstring>
 using namespace std;
 
 struct list {
@@ -28,22 +30,37 @@ void and_bool_array(bool* a, bool* b, bool* e);
 void initialize_bool(bool* a);
 void sub_bool_array(bool* e, bool* c);
 void unite_bool_array(bool* e, bool* d);
+void del_elem_array(char* in, int n);
+void unite_array(char* in_1, char* in_2);
+void and_array(char* in1, char* in2, char* res);
+void sub_array(char* in1, char* in2);
 void proc_by_word(char in[4][26]);
 void proc_by_list(char in[4][26]);
 void proc_by_bool_array(char in[4][26]);
+void proc_by_array(char in[4][26]);
 
 int main()
 {
+	//clock_t start, stop;
 	// A&&B\\C||D
 	char in[4][26] = { "qwerty","yasedfq","jen","oky" };
-
+	
+	//start = clock();
+	
 	proc_by_word(in);
 	cout << "\n";
 	proc_by_bool_array(in);
 	cout << "\n";
 	proc_by_list(in);
+	proc_by_array(in);
+	cout << endl;
+	
+	//stop = clock();
 
+	//cout << (float)(stop-start)/CLK_TCK;
+	
 	system("pause");
+	return 0;
 }
 
 
@@ -131,6 +148,18 @@ void proc_by_list(char in[4][26])
 	print_list(e);
 }
 
+void proc_by_array(char in[4][26])
+{
+	char* e = new char[26]();
+
+	and_array(in[0], in[1], e);
+	
+	sub_array(e, in[2]);
+	
+	unite_array(e, in[3]);
+
+	cout << e;
+}
 
 void unite_bool_array(bool* e, bool* d)
 {
@@ -364,4 +393,48 @@ list* delete_elem(list* lst, list* root)
 	}
 	return(temp);
 
+}
+
+void del_elem_array(char* in, int n)
+{
+	int j=n;
+	for(int i=n+1; i<strlen(in); ++i) in[j++]=in[i];
+	in[strlen(in)-1] = '\0';
+}
+
+void unite_array(char* in1, char* in2)
+{
+	int f;
+	for(int i=0; i<strlen(in2); ++i)
+	{
+		f = 0;
+		for(int j=0; j<strlen(in1); ++j)
+		{
+			if(in2[i]==in1[j])  f = 1;
+		}
+		if(f==0) in1[strlen(in1)] = in2[i];
+	}
+}
+
+void and_array(char* in1, char* in2, char *res)
+{
+	int k=0;
+	for(int i=0; i<strlen(in1); ++i)
+	{
+		for(int j=0; j<strlen(in2); ++j)
+		{
+			if(in1[i]==in2[j]) res[k++] = in1[i];
+		}
+	}
+}
+
+void sub_array(char* in1, char* in2)
+{
+	for(int i=0; i<strlen(in1); ++i)
+	{
+		for(int j=0; j<strlen(in2); ++j)
+		{
+			if(in1[i]==in2[j]) del_elem_array(in1, i);
+		}
+	}
 }
