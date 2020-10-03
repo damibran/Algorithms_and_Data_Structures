@@ -44,9 +44,10 @@ char* generate_union();
 
 int main()
 {
-	//clock_t start, stop;
+	clock_t start, stop;
 	// A&&B\\C||D
 	srand(time(0));
+	start = clock();
 	for (int i = 0; i < 1000000; i++) {
 		char** in = new char* [4];
 		for (int i = 0; i < 4; i++)
@@ -54,39 +55,20 @@ int main()
 			in[i] = generate_union();
 		}
 
-		/*for (int i = 0; i < 4; i++)
-			cout << in[i] << '\n';*/
-
-		/*for (int i = 0; i < 4; i++)
-			in[i] = new char[26];
-
-		strcpy_s(in[0],sizeof(char)*26, "jhrnmcygkzxao");
-		strcpy_s(in[1], sizeof(char) * 26,"scxdjwf");
-		strcpy_s(in[2], sizeof(char) * 26,"gjbnwmcyxhu");
-		strcpy_s(in[3], sizeof(char) * 26,"lcjs");*/
-
-
-		//cout << "/////////////////////////////////////\n";
-		//start = clock();
-
 		proc_by_word(in);
-		//cout << "\n";
 		proc_by_bool_array(in);
-		//cout << "\n";
 		proc_by_list(in);
 		proc_by_array(in);
-		//cout << endl;
 
-		//stop = clock();
-
-		//cout << (float)(stop-start)/CLK_TCK;
 		for(int i =0;i<4;i++)
 		{
 			delete[] in[i];
 		}
 		delete[] in;
-		//cout << endl;
 	}
+	stop = clock();
+
+	cout << ((float)(stop - start) / CLK_TCK)/1000000;
 	system("pause");
 	return 0;
 }
@@ -117,7 +99,7 @@ void proc_by_bool_array(char **in)
 	bool* b;
 	bool* c;
 	bool* d;
-	bool* e = new bool[26];
+	bool* e;
 
 	a = str_to_univers_array(in[0]);
 
@@ -135,7 +117,7 @@ void proc_by_bool_array(char **in)
 
 	unite_bool_array(e, d);
 
-	char* res = new char[26];
+	char* res;
 	res = univers_to_str_array(e);
 
 	delete[] res;
@@ -167,7 +149,7 @@ void proc_by_word(char** in)
 	e = (e | c) & (~c);
 	e = e | d;
 
-	char* res = new char[26];
+	char* res;
 
 	res = univers_to_str_word(e);
 	delete[] res;
@@ -285,7 +267,6 @@ char* univers_to_str_word(long int in)
 	}
 
 	k[m] = '\0';
-
 	return k;
 }
 
