@@ -16,7 +16,7 @@ struct list {
 
 list* delete_elem(list* lst, list* root);
 void add(list** head, char c);
-void print_list(list* head);
+char* list_to_str(list* head);
 int len(list* head);
 void str_to_list(list* head, string in);
 void and_list(list* a, list* b, list* e);
@@ -39,6 +39,7 @@ void proc_by_list(char** in);
 void proc_by_bool_array(char** in);
 void proc_by_array(char** in);
 char* generate_union();
+void sort_array(char* in);
 
 
 
@@ -56,9 +57,15 @@ int main()
 		}
 
 		proc_by_word(in);
+		//cout << endl;
 		proc_by_bool_array(in);
+		//cout << endl;
 		proc_by_list(in);
+		//cout << endl;
 		proc_by_array(in);
+		//cout << endl;
+
+		//cout << "/////////////////////////////////////////////////////////////\n";
 
 		for(int i =0;i<4;i++)
 		{
@@ -119,6 +126,7 @@ void proc_by_bool_array(char **in)
 
 	char* res;
 	res = univers_to_str_array(e);
+	//cout << res;
 
 	delete[] res;
 	delete[] a;
@@ -126,7 +134,6 @@ void proc_by_bool_array(char **in)
 	delete[] c;
 	delete[] d;
 	delete[] e;
-	//cout << res;
 }
 
 void proc_by_word(char** in)
@@ -152,8 +159,9 @@ void proc_by_word(char** in)
 	char* res;
 
 	res = univers_to_str_word(e);
-	delete[] res;
 	//cout << res;
+
+	delete[] res;
 }
 
 void proc_by_list(char **in)
@@ -174,19 +182,21 @@ void proc_by_list(char **in)
 	str_to_list(d, in[3]);
 
 	and_list(a, b, e);
-//	print_list(e);
 
 	sub_list(e, c);
 
 	unite_list(e, d);
 
+	char* res = list_to_str(e);
+	//cout << res;
+
+	delete[] res;
 	delete a;
 	delete b;
 	delete c;
 	delete d;
 	delete e;
 
-	//print_list(e);
 }
 
 void proc_by_array(char **in)
@@ -199,9 +209,37 @@ void proc_by_array(char **in)
 	
 	unite_array(e, in[3]);
 
+
+	sort_array(e);
+	//cout << e;
+
 	delete[] e;
 
-	//cout << e;
+}
+
+void sort_array(char* in)
+{	
+	char t[26];
+	char cur;
+	int l=0;
+	int i;
+	int len_in= strlen(in);
+	for(i=0;i<26;i++)
+	{
+		cur = 'a' + i;
+		for(int j=0;j< len_in;j++)
+		{
+			if (in[j] == cur)
+				t[l++] = cur;
+		}
+	}
+	t[l] = '\0';
+	l = 0;
+	for (i = 0; i < strlen(t); i++)
+	{
+		in[i] = t[i];
+	}
+	in[i] = '\0';
 }
 
 void unite_bool_array(bool* e, bool* d)
@@ -364,18 +402,27 @@ void str_to_list(list* head, string in)
 		add(&head, in[i]);
 }
 
-void print_list(list* head)
+char* list_to_str (list* head)
 {
 	list* a;
-
-	a = head->next;
-	while (a != nullptr)
+	char* res = new char[26];
+	int l = 0;
+	char c;
+	
+	for (int i=0; i < 26; i++)
 	{
-		cout << a->el;
-		a = a->next;
+		a = head->next;
+		c = 'a' + i;
+		while (a != nullptr)
+		{
+			if (a->el == c)
+				res[l++] = a->el;
+			
+			a = a->next;
+		}
 	}
-
-	cout << '\n';
+	res[l] = '\0';
+	return res;
 }
 
 void add(list** head, char c)
