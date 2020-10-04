@@ -48,34 +48,56 @@ int main()
 	clock_t start, stop;
 	// A&&B\\C||D
 	srand(time(0));
-	start = clock();
-	for (int i = 0; i < 1000000; i++) {
-		char** in = new char* [4];
+	
+	const int N = 1000;
+
+	char*** in = new char** [N];
+	for (int j = 0; j < N; j++) {
+		in[j] = new char* [4];
 		for (int i = 0; i < 4; i++)
 		{
-			in[i] = generate_union();
+			in[j][i] = generate_union();
 		}
+	}
 
-		proc_by_word(in);
-		//cout << endl;
-		proc_by_bool_array(in);
-		//cout << endl;
-		proc_by_list(in);
-		//cout << endl;
-		proc_by_array(in);
-		//cout << endl;
+	cout << "Fuk\n";
 
-		//cout << "/////////////////////////////////////////////////////////////\n";
-
-		for(int i =0;i<4;i++)
-		{
-			delete[] in[i];
-		}
-		delete[] in;
+	start = clock();
+	for (int i = 0; i < N; i++) {
+		proc_by_word(in[i]);
 	}
 	stop = clock();
+	cout<<"By word : " << ((float)(stop - start) / CLK_TCK) / N;
 
-	cout << ((float)(stop - start) / CLK_TCK)/1000000;
+	start = clock();
+	for (int i = 0; i < N; i++) {
+		proc_by_bool_array(in[i]);
+	}
+	stop = clock();
+	cout << "\nBy bool array : " << ((float)(stop - start) / CLK_TCK) / N;
+
+	start = clock();
+	for (int i = 0; i < N; i++) {
+		proc_by_list(in[i]);
+	}
+	stop = clock();
+	cout << "\nBy list : " << ((float)(stop - start) / CLK_TCK) / N;
+
+	start = clock();
+	for (int i = 0; i < N; i++) {
+		proc_by_array(in[i]);
+
+		for (int j = 0; j < 4; j++)
+		{
+			delete[] in[i][j];
+		}
+		delete[] in[i];
+	}
+	stop = clock();
+	cout << "\nBy array : " << ((float)(stop - start) / CLK_TCK) / N;
+
+	delete[] in;
+
 	system("pause");
 	return 0;
 }
