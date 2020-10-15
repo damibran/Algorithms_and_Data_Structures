@@ -34,10 +34,10 @@ void del_elem_array(char* in, int n);
 void unite_array(char* in_1, char* in_2);
 void and_array(char* in1, char* in2, char* res);
 void sub_array(char* in1, char* in2);
-void proc_by_word(char** in, bool debug);
-void proc_by_list(char** in, bool debug);
-void proc_by_bool_array(char** in, bool debug);
-void proc_by_array(char** in, bool debug);
+void proc_by_word(char** in, bool debug, int i);
+void proc_by_list(char** in, bool debug, int);
+void proc_by_bool_array(char** in, bool debug, int i);
+void proc_by_array(char** in, bool debug, int);
 char* generate_union();
 void sort_array(char* in);
 
@@ -49,29 +49,39 @@ int main()
 	// A&&B\\C||D
 	srand(time(0));
 
-	const int N = 3;
-	bool debug = true;
+	const int N = 100000;
+	bool debug = false;
 	int user_input = 1;
 
 	char*** in = new char** [N];
 
-	if (debug)
-		printf("Tests:\n\n");
+
 	for (int j = 0; j < N; j++) {
 		in[j] = new char* [4];
 		for (int i = 0; i < 4; i++)
 		{
 			in[j][i] = generate_union();
-			if (debug)
-			{
-				cout << in[j][i]<<endl;
-			}
 		}
-		cout << "---------------------------------\n";
+
 	}
 
 
 	while (user_input != 0) {
+		if (debug)
+			printf("Tests:\n\n");
+		for (int i = 0; i < N; i++)
+		{
+			if (debug)
+				cout << i + 1 << " : " << endl;
+			for (int j = 0; j < 4; j++)
+			{
+				if (debug)
+					cout << in[i][j] << endl;
+			}
+			if (debug)
+				cout << "---------------------------------\n";
+		}
+
 		printf("\nMenu:\n0: Exit\n1: Process by word\n2: Process by bool array\n3: Process by list\n4: Process by array\n\nEnter your choice: ");
 
 		cin >> user_input;
@@ -82,10 +92,10 @@ int main()
 		{
 			start = clock();
 			for (int i = 0; i < N; i++) {
-				proc_by_word(in[i], debug);
+				proc_by_word(in[i], debug, i + 1);
 			}
 			stop = clock();
-			cout << "\nBy word : " << ((float)(stop - start) / CLK_TCK) / N<<endl;
+			cout << "\nBy word : " << ((float)(stop - start) / CLK_TCK) / N << endl;
 
 			system("pause");
 			user_input = 8;
@@ -96,7 +106,7 @@ int main()
 		{
 			start = clock();
 			for (int i = 0; i < N; i++) {
-				proc_by_bool_array(in[i], debug);
+				proc_by_bool_array(in[i], debug, i + 1);
 			}
 			stop = clock();
 			cout << "\nBy bool array : " << ((float)(stop - start) / CLK_TCK) / N << endl;
@@ -110,7 +120,7 @@ int main()
 		{
 			start = clock();
 			for (int i = 0; i < N; i++) {
-				proc_by_list(in[i], debug);
+				proc_by_list(in[i], debug, i + 1);
 			}
 			stop = clock();
 			cout << "\nBy list : " << ((float)(stop - start) / CLK_TCK) / N << endl;
@@ -124,7 +134,7 @@ int main()
 		{
 			start = clock();
 			for (int i = 0; i < N; i++) {
-				proc_by_array(in[i], debug);
+				proc_by_array(in[i], debug, i + 1);
 			}
 			stop = clock();
 			cout << "\nBy array : " << ((float)(stop - start) / CLK_TCK) / N << endl;
@@ -175,7 +185,7 @@ char* generate_union() {
 	return St;
 }
 
-void proc_by_bool_array(char** in, bool debug)
+void proc_by_bool_array(char** in, bool debug, int i)
 {
 	bool* a;
 	bool* b;
@@ -202,7 +212,7 @@ void proc_by_bool_array(char** in, bool debug)
 	char* res;
 	res = univers_to_str_array(e);
 	if (debug)
-		cout << res << endl;
+		cout << "answer for test " << i << ": " << res << endl;
 
 	delete[] res;
 	delete[] a;
@@ -212,7 +222,7 @@ void proc_by_bool_array(char** in, bool debug)
 	delete[] e;
 }
 
-void proc_by_word(char** in, bool debug)
+void proc_by_word(char** in, bool debug, int i)
 {
 	long int a;
 	long int b;
@@ -236,12 +246,12 @@ void proc_by_word(char** in, bool debug)
 
 	res = univers_to_str_word(e);
 	if (debug)
-		cout << res << endl;
+		cout << "answer for test " << i << ": " << res << endl;
 
 	delete[] res;
 }
 
-void proc_by_list(char** in, bool debug)
+void proc_by_list(char** in, bool debug, int i)
 {
 	list* a = new list('#');
 	list* b = new list('#');
@@ -266,7 +276,7 @@ void proc_by_list(char** in, bool debug)
 
 	char* res = list_to_str(e);
 	if (debug)
-		cout << res << endl;
+		cout << "answer for test" << i << ": " << res << endl;
 
 	delete[] res;
 	delete a;
@@ -277,7 +287,7 @@ void proc_by_list(char** in, bool debug)
 
 }
 
-void proc_by_array(char** in, bool debug)
+void proc_by_array(char** in, bool debug, int i)
 {
 	char* e = new char[26]();
 
@@ -290,7 +300,7 @@ void proc_by_array(char** in, bool debug)
 
 	sort_array(e);
 	if (debug)
-		cout << e << endl;
+		cout << "answer for test" << i << ": " << e << endl;
 
 	delete[] e;
 
