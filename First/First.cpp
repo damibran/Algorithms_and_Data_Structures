@@ -49,8 +49,8 @@ int main()
 	// A&&B\\C||D
 	srand(time(0));
 
-	const int N = 100000;
-	bool debug = false;
+	const int N = 3;
+	bool debug = true;
 	int user_input = 1;
 
 	char*** in = new char** [N];
