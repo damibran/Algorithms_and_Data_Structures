@@ -34,7 +34,7 @@ void del_elem_array(char* in, int n);
 void unite_array(char* in_1, char* in_2);
 void and_array(char* in1, char* in2, char* res);
 void sub_array(char* in1, char* in2);
-void proc_by_word(char **in,bool debug);
+void proc_by_word(char** in, bool debug);
 void proc_by_list(char** in, bool debug);
 void proc_by_bool_array(char** in, bool debug);
 void proc_by_array(char** in, bool debug);
@@ -48,65 +48,108 @@ int main()
 	clock_t start, stop;
 	// A&&B\\C||D
 	srand(time(0));
-	
+
 	const int N = 3;
 	bool debug = true;
+	int user_input = 1;
 
 	char*** in = new char** [N];
+
+	if (debug)
+		printf("Tests:\n\n");
 	for (int j = 0; j < N; j++) {
 		in[j] = new char* [4];
 		for (int i = 0; i < 4; i++)
 		{
 			in[j][i] = generate_union();
+			if (debug)
+			{
+				cout << in[j][i]<<endl;
+			}
 		}
+		cout << "---------------------------------\n";
 	}
 
-	cout << "FUCK\n";
 
-	start = clock();
-	for (int i = 0; i < N; i++) {
-		proc_by_word(in[i], debug);
-	}
-	stop = clock();
-	cout<<"By word : " << ((float)(stop - start) / CLK_TCK) / N;
-	
-	if (debug)
-		cout << "///////////////////////////////////////////////////////////////////////////\n";
+	while (user_input != 0) {
+		printf("\nMenu:\n0: Exit\n1: Process by word\n2: Process by bool array\n3: Process by list\n4: Process by array\n\nEnter your choice: ");
 
-	start = clock();
-	for (int i = 0; i < N; i++) {
-		proc_by_bool_array(in[i],debug);
-	}
-	stop = clock();
-	cout << "\nBy bool array : " << ((float)(stop - start) / CLK_TCK) / N;
-
-	if (debug)
-		cout << "///////////////////////////////////////////////////////////////////////////\n";
-
-	start = clock();
-	for (int i = 0; i < N; i++) {
-		proc_by_list(in[i], debug);
-	}
-	stop = clock();
-	cout << "\nBy list : " << ((float)(stop - start) / CLK_TCK) / N;
-
-	if (debug)
-		cout << "///////////////////////////////////////////////////////////////////////////\n";
-
-	start = clock();
-	for (int i = 0; i < N; i++) {
-		proc_by_array(in[i], debug);
-
-		for (int j = 0; j < 4; j++)
+		cin >> user_input;
+		cout << endl;
+		switch (user_input)
 		{
-			delete[] in[i][j];
-		}
-		delete[] in[i];
-	}
-	stop = clock();
-	cout << "\nBy array : " << ((float)(stop - start) / CLK_TCK) / N;
+		case 1:
+		{
+			start = clock();
+			for (int i = 0; i < N; i++) {
+				proc_by_word(in[i], debug);
+			}
+			stop = clock();
+			cout << "\nBy word : " << ((float)(stop - start) / CLK_TCK) / N<<endl;
 
-	delete[] in;
+			system("pause");
+			user_input = 8;
+			system("cls");
+		}
+		break;
+		case 2:
+		{
+			start = clock();
+			for (int i = 0; i < N; i++) {
+				proc_by_bool_array(in[i], debug);
+			}
+			stop = clock();
+			cout << "\nBy bool array : " << ((float)(stop - start) / CLK_TCK) / N << endl;
+
+			system("pause");
+			user_input = 8;
+			system("cls");
+		}
+		break;
+		case 3:
+		{
+			start = clock();
+			for (int i = 0; i < N; i++) {
+				proc_by_list(in[i], debug);
+			}
+			stop = clock();
+			cout << "\nBy list : " << ((float)(stop - start) / CLK_TCK) / N << endl;
+
+			system("pause");
+			user_input = 8;
+			system("cls");
+		}
+		break;
+		case 4:
+		{
+			start = clock();
+			for (int i = 0; i < N; i++) {
+				proc_by_array(in[i], debug);
+			}
+			stop = clock();
+			cout << "\nBy array : " << ((float)(stop - start) / CLK_TCK) / N << endl;
+
+			system("pause");
+			user_input = 8;
+			system("cls");
+		}
+		break;
+		case 0:
+		{
+			for (int i = 0; i < N; i++) {
+				for (int j = 0; j < 4; j++)
+				{
+					delete[] in[i][j];
+				}
+				delete[] in[i];
+			}
+			delete[] in;
+		}break;
+		default:
+			break;
+		}
+
+	}
 
 	system("pause");
 	return 0;
@@ -114,8 +157,8 @@ int main()
 
 char* generate_union() {
 	int m = rand() % 26;
-	char *S= new char[26];
-	char *St=new char[26];
+	char* S = new char[26];
+	char* St = new char[26];
 	for (int i = 0; i < m; i++)
 		S[i] = 49 + rand() % 0x1A + '0';
 	int l = 0;
@@ -132,7 +175,7 @@ char* generate_union() {
 	return St;
 }
 
-void proc_by_bool_array(char **in, bool debug)
+void proc_by_bool_array(char** in, bool debug)
 {
 	bool* a;
 	bool* b;
@@ -158,7 +201,7 @@ void proc_by_bool_array(char **in, bool debug)
 
 	char* res;
 	res = univers_to_str_array(e);
-	if(debug)
+	if (debug)
 		cout << res << endl;
 
 	delete[] res;
@@ -192,13 +235,13 @@ void proc_by_word(char** in, bool debug)
 	char* res;
 
 	res = univers_to_str_word(e);
-	if(debug)
+	if (debug)
 		cout << res << endl;
 
 	delete[] res;
 }
 
-void proc_by_list(char **in,bool debug)
+void proc_by_list(char** in, bool debug)
 {
 	list* a = new list('#');
 	list* b = new list('#');
@@ -222,7 +265,7 @@ void proc_by_list(char **in,bool debug)
 	unite_list(e, d);
 
 	char* res = list_to_str(e);
-	if(debug)
+	if (debug)
 		cout << res << endl;
 
 	delete[] res;
@@ -234,19 +277,19 @@ void proc_by_list(char **in,bool debug)
 
 }
 
-void proc_by_array(char **in,bool debug)
+void proc_by_array(char** in, bool debug)
 {
 	char* e = new char[26]();
 
 	and_array(in[0], in[1], e);
-	
+
 	sub_array(e, in[2]);
-	
+
 	unite_array(e, in[3]);
 
 
 	sort_array(e);
-	if(debug)
+	if (debug)
 		cout << e << endl;
 
 	delete[] e;
@@ -254,16 +297,16 @@ void proc_by_array(char **in,bool debug)
 }
 
 void sort_array(char* in)
-{	
+{
 	char t[26];
 	char cur;
-	int l=0;
+	int l = 0;
 	int i;
-	int len_in= strlen(in);
-	for(i=0;i<26;i++)
+	int len_in = strlen(in);
+	for (i = 0; i < 26; i++)
 	{
 		cur = 'a' + i;
-		for(int j=0;j< len_in;j++)
+		for (int j = 0; j < len_in; j++)
 		{
 			if (in[j] == cur)
 				t[l++] = cur;
@@ -355,7 +398,7 @@ long int str_to_univers_word(string in)
 	return k;
 }
 
-void unite_list(list* e,list *d)
+void unite_list(list* e, list* d)
 {
 	list* curE = e->next;
 	list* curD = d->next;
@@ -401,21 +444,21 @@ void sub_list(list* e, list* c)
 {
 	list* curE = e->next;
 	list* curC = c->next;
-	
-	while(curE!=nullptr)
+
+	while (curE != nullptr)
 	{
 		curC = c->next;
-		while(curC!=nullptr)
+		while (curC != nullptr)
 		{
-			if(curE->el==curC->el)
+			if (curE->el == curC->el)
 			{
-				curE=delete_elem(curE, e);
+				curE = delete_elem(curE, e);
 			}
 			curC = curC->next;
 		}
 		curE = curE->next;
 	}
-	
+
 }
 
 int len(list* head)
@@ -438,14 +481,14 @@ void str_to_list(list* head, string in)
 		add(&head, in[i]);
 }
 
-char* list_to_str (list* head)
+char* list_to_str(list* head)
 {
 	list* a;
 	char* res = new char[26];
 	int l = 0;
 	char c;
-	
-	for (int i=0; i < 26; i++)
+
+	for (int i = 0; i < 26; i++)
 	{
 		a = head->next;
 		c = 'a' + i;
@@ -453,7 +496,7 @@ char* list_to_str (list* head)
 		{
 			if (a->el == c)
 				res[l++] = a->el;
-			
+
 			a = a->next;
 		}
 	}
@@ -499,44 +542,44 @@ list* delete_elem(list* lst, list* root)
 
 void del_elem_array(char* in, int n)
 {
-	int j=n;
-	for(int i=n+1; i<strlen(in); ++i) in[j++]=in[i];
-	in[strlen(in)-1] = '\0';
+	int j = n;
+	for (int i = n + 1; i < strlen(in); ++i) in[j++] = in[i];
+	in[strlen(in) - 1] = '\0';
 }
 
 void unite_array(char* in1, char* in2)
 {
 	int f;
-	for(int i=0; i<strlen(in2); ++i)
+	for (int i = 0; i < strlen(in2); ++i)
 	{
 		f = 0;
-		for(int j=0; j<strlen(in1); ++j)
+		for (int j = 0; j < strlen(in1); ++j)
 		{
-			if(in2[i]==in1[j])  f = 1;
+			if (in2[i] == in1[j])  f = 1;
 		}
-		if(f==0) in1[strlen(in1)] = in2[i];
+		if (f == 0) in1[strlen(in1)] = in2[i];
 	}
 }
 
-void and_array(char* in1, char* in2, char *res)
+void and_array(char* in1, char* in2, char* res)
 {
-	int k=0;
-	for(int i=0; i<strlen(in1); ++i)
+	int k = 0;
+	for (int i = 0; i < strlen(in1); ++i)
 	{
-		for(int j=0; j<strlen(in2); ++j)
+		for (int j = 0; j < strlen(in2); ++j)
 		{
-			if(in1[i]==in2[j]) res[k++] = in1[i];
+			if (in1[i] == in2[j]) res[k++] = in1[i];
 		}
 	}
 }
 
 void sub_array(char* in1, char* in2)
 {
-	for(int i=0; i<strlen(in1); ++i)
+	for (int i = 0; i < strlen(in1); ++i)
 	{
-		for(int j=0; j<strlen(in2); ++j)
+		for (int j = 0; j < strlen(in2); ++j)
 		{
-			if(in1[i]==in2[j]) del_elem_array(in1, i);
+			if (in1[i] == in2[j]) del_elem_array(in1, i);
 		}
 	}
 }
