@@ -12,7 +12,7 @@ char* Set::to_String()
 	for (int i = 0; i < 26; i++)
 	{
 		a = head->next;
-		
+
 		c = 'a' + i;
 		while (a != nullptr)
 		{
@@ -25,6 +25,34 @@ char* Set::to_String()
 	res[l] = '\0';
 	return res;
 }
+
+Set& Set::operator&= (const Set& B) const
+{
+	Set A(*this);
+	Set* E = new Set();
+
+	while (&A != nullptr)
+	{
+		Set* b = B.next;
+		while (b != nullptr)
+		{
+			if (A.el == b->el)
+				E->add(A.el);
+
+			b = b->next;
+		}
+		A = *(A.next);
+	}
+
+	return *E;
+}
+
+Set Set :: operator & (const Set& B) const
+{
+	Set C(*this);
+	return (C &= B);
+}
+
 
 Set::Set(std::string in)
 {
