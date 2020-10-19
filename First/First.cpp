@@ -34,8 +34,8 @@ void del_elem_array(char* in, int n);
 void unite_array(char* in_1, char* in_2);
 void and_array(char* in1, char* in2, char* res);
 void sub_array(char* in1, char* in2);
-void proc_by_word(char** in, bool debug, int i);
 void proc_by_list(char** in, bool debug, int);
+void proc_by_word(char** in, bool debug, int i);
 void proc_by_bool_array(char** in, bool debug, int i);
 void proc_by_array(char** in, bool debug, int);
 char* generate_union();
@@ -49,8 +49,8 @@ int main()
 	// A&&B\\C||D
 	srand(time(0));
 
-	const int N = 3;
-	bool debug = true;
+	const int N = 1000000;
+	bool debug = false;
 	int user_input = 1;
 
 	char*** in = new char** [N];
@@ -166,7 +166,7 @@ int main()
 }
 
 char* generate_union() {
-	int m = rand() % 26;
+	int m = rand() % 6;
 	char* S = new char[26];
 	char* St = new char[26];
 	for (int i = 0; i < m; i++)
@@ -296,7 +296,6 @@ void proc_by_array(char** in, bool debug, int i)
 	sub_array(e, in[2]);
 
 	unite_array(e, in[3]);
-
 
 	sort_array(e);
 	if (debug)
