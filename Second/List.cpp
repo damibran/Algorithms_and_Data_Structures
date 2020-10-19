@@ -33,7 +33,7 @@ Set& Set::operator &= (Set& B)
 	Node* curT = T.first;
 	Node* prevThis=nullptr;
 	Node* curThis = this->first;
-
+	
 	if (curT != nullptr) {
 		while (curT != nullptr)
 		{
@@ -52,18 +52,17 @@ Set& Set::operator &= (Set& B)
 		}
 		if (curThis != nullptr && curThis != this->first)
 		{
-			delete curT;
+			delete curThis;
 			this->last = prevThis;
 			prevThis->next = nullptr;
 		}
-		if (curThis == this->first)
+		else if (curThis == this->first)
 		{
 			delete curThis;
 			first = nullptr;
 			last = nullptr;
 		}
 	}
-
 	return *this;
 }
 

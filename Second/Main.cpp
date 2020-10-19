@@ -26,24 +26,25 @@ char* generate_union() {
 int main()
 {
 	srand(time(0));
-	
-	for (int i = 0; i < 100; i++) {
+	char* in;
+	for (int i = 0; i < 1000000; i++) {
 
-		char* in = new char(26);
 		in = generate_union();
 		std::cout << "a: " << in<< std::endl;
 		Set a(in);
-		delete in;
+		delete[] in;
 
-		in = new char(26);
 		in = generate_union();
 		std::cout << "b: " << in << std::endl;
 		Set b(in);
-		delete in;
+		delete[] in;
 
 		a &= b;
 
-		std::cout <<"res: "<< a.to_String() << std::endl << std::endl;
+		char* res = a.to_String();
+
+		std::cout <<"res: "<< res << std::endl << std::endl;
+		delete res;
 	}
 
 	system("pause");
