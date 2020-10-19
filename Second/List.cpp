@@ -56,6 +56,12 @@ Set& Set::operator &= (Set& B)
 			this->last = prevThis;
 			prevThis->next = nullptr;
 		}
+		if (curThis == this->first)
+		{
+			delete curThis;
+			first = nullptr;
+			last = nullptr;
+		}
 	}
 
 	return *this;

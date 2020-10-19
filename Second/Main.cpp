@@ -27,23 +27,23 @@ int main()
 {
 	srand(time(0));
 	
-	for (int i = 0; i < 1000000; i++) {
+	for (int i = 0; i < 100; i++) {
 
 		char* in = new char(26);
 		in = generate_union();
-		//std::cout << "a: " << in<< std::endl;
+		std::cout << "a: " << in<< std::endl;
 		Set a(in);
 		delete in;
 
 		in = new char(26);
 		in = generate_union();
-		//std::cout << "b: " << in << std::endl;
+		std::cout << "b: " << in << std::endl;
 		Set b(in);
 		delete in;
 
 		a &= b;
 
-		//std::cout <<"res: "<< a.to_String() << std::endl << std::endl;
+		std::cout <<"res: "<< a.to_String() << std::endl << std::endl;
 	}
 
 	system("pause");
