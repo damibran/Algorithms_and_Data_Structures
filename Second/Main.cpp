@@ -30,21 +30,21 @@ int main()
 	for (int i = 0; i < 1000000; i++) {
 
 		in = generate_union();
-		std::cout << "a: " << in<< std::endl;
+		//std::cout << "a: " << in<< std::endl;
 		Set a(in);
 		delete[] in;
 
 		in = generate_union();
-		std::cout << "b: " << in << std::endl;
+		//std::cout << "b: " << in << std::endl;
 		Set b(in);
 		delete[] in;
 
-		a &= b;
+		a -= b;
 
-		char* res = a.to_String();
+		//char* res = a.to_String();
 
-		std::cout <<"res: "<< res << std::endl << std::endl;
-		delete res;
+		//std::cout <<"res: "<< res << std::endl << std::endl;
+		//delete res;
 	}
 
 	system("pause");
