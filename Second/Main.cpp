@@ -23,29 +23,59 @@ char* generate_union() {
 	return St;
 }
 
+using namespace std;
+
 int main()
 {
+	clock_t start, stop;
+	// A&&B\\C||D
 	srand(time(0));
-	char* in;
-	for (int i = 0; i < 1000000; i++) {
 
-		in = generate_union();
-		//std::cout << "a: " << in<< std::endl;
-		Set a(in);
-		delete[] in;
+	const int N = 1000000;
+	bool debug = false;
 
-		in = generate_union();
-		//std::cout << "b: " << in << std::endl;
-		Set b(in);
-		delete[] in;
+	char*** in = new char** [N];
 
-		a -= b;
+	for (int j = 0; j < N; j++) {
+		in[j] = new char* [4];
+		for (int i = 0; i < 4; i++)
+		{
+			in[j][i] = generate_union();
+		}
 
-		//char* res = a.to_String();
-
-		//std::cout <<"res: "<< res << std::endl << std::endl;
-		//delete res;
 	}
+
+	cout << "FUCK";
+
+	start = clock();
+	for (int i = 0; i < N; i++)
+	{
+		Set a(in[i][0]);
+		if (debug)
+			cout << endl << "a : " << in[i][0] << endl;
+		Set b(in[i][1]);
+		if (debug)
+			cout << "b : " << in[i][1] << endl;
+		Set c(in[i][2]);
+		if (debug)
+			cout << "c : " << in[i][2] << endl;
+		Set d(in[i][3]);
+		if (debug)
+			cout << "d : " << in[i][3] << endl;
+		Set e;
+
+		e = ((a & b) - c) | d;
+
+		if (debug) {
+			char* res;
+			res = e.to_String();
+			cout << "res : " << in[i][3] << endl;
+			delete res;
+		}
+
+	}
+	stop = clock();
+	cout << "\nTime : " << ((float)(stop - start) / CLK_TCK) / N << endl;
 
 	system("pause");
 	return 0;

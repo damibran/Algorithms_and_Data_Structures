@@ -18,13 +18,14 @@ private:
 
 public: 
 	Set& operator |= (const Set&);
-	Set operator | (const Set&); 
-	Set& operator &= (Set& b);
-	Set operator & (const Set&); 
+	Set operator | (const Set&)const; 
+	Set& operator &= (const Set& b);
+	Set operator & (const Set&)const;
 	Set& operator -= (const Set&);
-	Set operator - (const Set&);
+	Set operator - (const Set&)const;
+	Set& operator= (const Set& );
 	char* to_String(); 
-	Set();
+	Set() {};
 	Set(const Set&);
 	Set(std::string in);
 	~Set() { delete first; }

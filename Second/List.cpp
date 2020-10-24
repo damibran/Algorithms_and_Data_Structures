@@ -26,44 +26,35 @@ char* Set::to_String()
 	return res;
 }
 
-Set& Set::operator &= (Set& B)
+Set& Set::operator &= (const Set& B)
 {
-	Set T(*this);
+	bool flag = false;
+	Set::Node* curB;
+	Set::Node* curT=this->first;
 
-	Node* curT = T.first;
-	Node* prevThis = nullptr;
-	Node* curThis = this->first;
-
-	if (curT != nullptr) {
-		while (curT != nullptr)
+	while (curT != nullptr) 
+	{
+		curB = B.first;
+		flag = false;
+		while (curB != nullptr)
 		{
-			Node* curB = B.first;
-			while (curB != nullptr)
-			{
-				if (curB->el == curT->el)
-				{
-					curThis->el = curT->el;
-					prevThis = curThis;
-					curThis = curThis->next;
-				}
-				curB = curB->next;
-			}
+			if (curB->el == curT->el)
+				flag = true;
+			curB = curB->next;
+		}
+		if (!flag)
+			curT = this->delete_elem(curT);
+		if(curT!=nullptr)
 			curT = curT->next;
-		}
-		if (curThis != nullptr && curThis != this->first)
-		{
-			delete curThis;
-			this->last = prevThis;
-			prevThis->next = nullptr;
-		}
-		else if (curThis == this->first)
-		{
-			delete curThis;
-			first = nullptr;
-			last = nullptr;
-		}
 	}
-	return *this;
+
+	return (*this);
+}
+
+Set Set::operator & (const Set& B) const 
+{
+	Set C(*this);
+	return (C &= B);
 }
 
 Set& Set::operator-= (const Set& B)
@@ -87,6 +78,57 @@ Set& Set::operator-= (const Set& B)
 	}
 
 	return (*this);
+}
+
+Set Set::operator - (const Set& B) const
+{
+	Set C(*this);
+	return (C -= B);
+}
+
+Set& Set::operator |= (const Set& B)
+{
+	bool flag = false;
+	Set::Node* curB = B.first;
+	Set::Node* curT;
+
+	while (curB != nullptr)
+	{
+		curT = this->first;
+		flag = false;
+		while (curT != nullptr)
+		{
+			if (curT->el == curB->el)
+				flag = true;
+
+			curT = curT->next;
+		}
+		if (!flag)
+			this->add(curB->el);
+		curB = curB->next;
+	}
+	return (*this);
+}
+
+Set Set::operator | (const Set& B) const
+{
+	Set C(*this);
+	return (C |= B);
+}
+
+Set& Set::operator= (const Set& B) 
+{
+	Node* curB=B.first;
+
+	if (this != &B)
+	{
+		while(curB!=nullptr)
+		{
+			this->add(curB->el);
+			curB = curB->next;
+		}
+	}
+	return *this;
 }
 
 Set::Node* Set::delete_elem(Node* lst)
