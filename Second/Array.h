@@ -97,7 +97,7 @@ Set Set::operator - (const Set& B) const
 
 void Set::Show()
 {
-    cout << endl << S << " = ((A & B) \\ C) | D = [" << A << "]" << endl;
+    cout << endl << S << " = [" << A << "]" << endl;
 }
 
 Set::Set(): n(0), S('A'+cnt++), A(new char[N+1]) {A[0]=0;}

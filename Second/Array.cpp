@@ -31,9 +31,10 @@ int main()
     for(long q=0;q<q0;q++) E=((A&B)-C)|D;
     clock_t end = clock();
     
+    cout << endl << "((A & B) \\ C) | D";
     E.Show();
     cout << "Time of one = " << (float)(end-begin)/CLK_TCK/q0 << endl;
-    
+
     for (long j = 0; j < q0; j++) 
     {
 		in[j] = new char* [4];
