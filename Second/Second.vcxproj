@@ -139,8 +139,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Array.cpp" />
-    <ClCompile Include="List.cpp" />
     <ClCompile Include="Staff_to_copy.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
