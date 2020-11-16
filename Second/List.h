@@ -11,6 +11,15 @@ private:
 		Node* next = nullptr;
 		Node(char c, Node* n = nullptr) : el(c), next() { }
 		~Node() { delete next; }
+
+
+		/*void* operator new(size_t size) {
+			return malloc(size);
+		}
+
+		void operator delete(void* p) {
+			free(p);
+		}*/
 	};
 
 	char S;
@@ -19,7 +28,7 @@ private:
 	Node* last = nullptr;
 
 public:
-	static int N, cnt;
+	static int N, cnt,debug;
 
 	Set& operator |= (const Set&);
 	Set operator | (const Set&)const;
@@ -29,9 +38,9 @@ public:
 	Set operator - (const Set&)const;
 	Set& operator= (const Set&);
 	char* to_String();
-	Set() {};
+	Set():S('A'+cnt) {};
 	Set(const Set&);
-	Set(std::string in);
+	Set(char,std::string in);
 	~Set() { delete first; }
 	Set(char S);
 	void add(char c);
@@ -77,6 +86,9 @@ void Set::Show()
 
 Set& Set::operator &= (const Set& B)
 {
+	if (debug)
+		printf("\noperation &= %c with %c", S, B.S);
+
 	bool flag = false;
 	Set::Node* curB;
 	Set::Node* curT = this->first;
@@ -103,6 +115,8 @@ Set& Set::operator &= (const Set& B)
 Set Set::operator & (const Set& B) const
 {
 	Set C(*this);
+	if (debug)
+		printf("\noperation & %c with %c", S, B.S);
 	return (C &= B);
 }
 
@@ -110,6 +124,8 @@ Set& Set::operator-= (const Set& B)
 {
 	Node* curT = this->first;
 	Node* curB;
+	if (debug)
+		printf("\noperation -= %c with %c", S, B.S);
 
 	while (curT != nullptr)
 	{
@@ -132,6 +148,8 @@ Set& Set::operator-= (const Set& B)
 Set Set::operator - (const Set& B) const
 {
 	Set C(*this);
+	if (debug)
+		printf("\noperation - %c with %c", S, B.S);
 	return (C -= B);
 }
 
@@ -140,6 +158,9 @@ Set& Set::operator |= (const Set& B)
 	bool flag = false;
 	Set::Node* curB = B.first;
 	Set::Node* curT;
+
+	if (debug)
+		printf("\noperation |= %c with %c", S, B.S);
 
 	while (curB != nullptr)
 	{
@@ -162,12 +183,16 @@ Set& Set::operator |= (const Set& B)
 Set Set::operator | (const Set& B) const
 {
 	Set C(*this);
+	if (debug)
+		printf("\noperation | %c with %c", S, B.S);
 	return (C |= B);
 }
 
 Set& Set::operator= (const Set& B)
 {
 	Node* curB = B.first;
+	if (debug)
+		printf("\noperation = %c with %c", S, B.S);
 
 	if (this != &B)
 	{
@@ -177,7 +202,6 @@ Set& Set::operator= (const Set& B)
 			first = nullptr;
 			last = nullptr;
 		}
-		S = B.S;
 		while (curB != nullptr)
 		{
 			this->add(curB->el);
@@ -227,7 +251,7 @@ int Set::get_len()
 Set::Set(const Set& a) {
 
 	Node* curA = a.first;
-	S = a.S+1;
+	S = a.S;
 	while (curA != nullptr)
 	{
 		add(curA->el);
@@ -237,6 +261,7 @@ Set::Set(const Set& a) {
 
 Set::Set(char S) : S(S)
 {
+	cnt++;
 	for (int i = 0; i < N; i++)
 	{
 		if (rand() % 2) add('a' + i);
@@ -249,7 +274,7 @@ Set::Set(char S) : S(S)
 	delete[] res;
 }
 
-Set::Set(std::string in) {
+Set::Set(char S,std::string in): S(S) {
 
 	for (int i = 0; i < in.length(); i++)
 		add(in[i]);

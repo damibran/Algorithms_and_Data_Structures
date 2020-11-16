@@ -10,7 +10,7 @@ private:
 	bool S[26];
 	char A;
 public:
-	static int N, cnt;
+	static int N, cnt, debug;
 
 	Set& operator = (const Set& B);
 	Set& operator |= (const Set&);
@@ -19,7 +19,7 @@ public:
 	Set operator & (const Set&);
 	Set& operator -= (const Set&);
 	Set operator - (const Set&);
-	Set(string in);
+	Set(char,string in);
 	Set(char S);
 	void Show();
 	Set();
@@ -28,10 +28,10 @@ public:
 
 Set& Set::operator = (const Set& B)
 {
-
+	if (debug)
+		printf("\noperation = %c with %c", A, B.A);
 	if (this != &B)
 	{
-		A = B.A+1;
 		for (int i = 0; i < 26; i++)
 			if (B.S[i])
 				S[i] = 1;
@@ -41,7 +41,8 @@ Set& Set::operator = (const Set& B)
 
 Set& Set::operator -= (const Set& B)
 {
-	A = B.A + 1;
+	if (debug)
+		printf("\noperation -= %c with %c", A, B.A);
 	for (int i = 0; i < 26; i++)
 		S[i] = (S[i] && !B.S[i]);
 	return *this;
@@ -49,12 +50,15 @@ Set& Set::operator -= (const Set& B)
 
 Set Set::operator - (const Set& B)
 {
+	if (debug)
+		printf("\noperation - %c with %c", A, B.A);
 	return (*this -= B);
 }
 
 Set& Set::operator |= (const Set& B)
 {
-	A = B.A + 1;
+	if (debug)
+		printf("\noperation |= %c with %c", A, B.A);
 	for (int i = 0; i < 26; i++)
 		S[i] = S[i] || B.S[i];
 	return *this;
@@ -62,12 +66,15 @@ Set& Set::operator |= (const Set& B)
 
 Set Set::operator | (const Set& B)
 {
+	if (debug)
+		printf("\noperation | %c with %c", A, B.A);
 	return (*this |= B);
 }
 
 Set& Set::operator &= (const Set& B)
 {
-	A = B.A + 1;
+	if (debug)
+		printf("\noperation &= %c with %c", A, B.A);
 	for (int i = 0; i < 26; i++)
 		S[i] = bool(S[i] && B.S[i]);
 	return *this;
@@ -75,10 +82,12 @@ Set& Set::operator &= (const Set& B)
 
 Set Set::operator & (const Set& B)
 {
+	if (debug)
+		printf("\noperation & %c with %c", A, B.A);
 	return (*this &= B);
 }
 
-Set::Set() {
+Set::Set():A('A'+cnt) {
 	for (int i = 0; i < 26; i++) {
 		S[i] = false;
 	}
@@ -86,6 +95,7 @@ Set::Set() {
 
 Set::Set(char A):A(A)
 {
+	cnt++;
 	for (int i = 0; i < 26; i++) {
 		S[i] = false;
 	}
@@ -102,7 +112,7 @@ Set::Set(char A):A(A)
 	cout << "]" << endl;
 }
 
-Set::Set(string in) {
+Set::Set(char A,string in): A(A) {
 	for (int i = 0; i < 26; i++) {
 		S[i] = false;
 	}

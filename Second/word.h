@@ -11,7 +11,7 @@ private:
 	char S;
 public:
 
-	static int N, cnt;
+	static int N, cnt,debug;
 
 	Set& operator = (const Set& B);
 	Set& operator |= (const Set&);
@@ -21,7 +21,7 @@ public:
 	Set& operator -= (const Set&);
 	Set operator - (const Set&);
 	Set(char);
-	Set(string in);
+	Set(char,string in);
 	void Show();
 	Set();
 	~Set() {}
@@ -29,53 +29,64 @@ public:
 
 Set& Set::operator = (const Set& B)
 {
+	if (debug)
+		printf("\noperation = %c with %c", S, B.S);
 	k = B.k;
-	S = B.S + 1;
 	return *this;
 }
 
 Set& Set::operator -= (const Set& B)
 {
+	if (debug)
+		printf("\noperation -= %c with %c", S, B.S);
 	k = k & (~B.k);
-	S = B.S + 1;
 	return *this;
 }
 
 Set Set::operator - (const Set& B)
 {
+	if (debug)
+		printf("\noperation - %c with %c", S, B.S);
 	return (*this -= B);
 }
 
 Set& Set::operator |= (const Set& B)
 {
+	if (debug)
+		printf("\noperation |= %c with %c", S, B.S);
 	k = k | B.k;
-	S = B.S + 1;
 	return *this;
 }
 
 Set Set::operator | (const Set& B)
 {
+	if (debug)
+		printf("\noperation | %c with %c", S, B.S);
 	return (*this |= B);
 }
 
 Set& Set::operator &= (const Set& B)
 {
+	if (debug)
+		printf("\noperation &= %c with %c", S, B.S);
 	k = k & B.k;
-	S = B.S + 1;
 	return *this;
 }
 
 Set Set::operator & (const Set& B)
 {
+	if (debug)
+		printf("\noperation & %c with %c", S, B.S);
 	return (*this &= B);
 }
 
-Set::Set() {
+Set::Set():S('A'+cnt) {
 	k = 0;
 }
 
 Set::Set(char S):S(S)
 {
+	cnt++;
 	k = 0;
 	for (int i = 0; i < N; i++)
 	{
@@ -92,7 +103,7 @@ Set::Set(char S):S(S)
 	cout << "]" << endl;
 }
 
-Set::Set(string in) {
+Set::Set(char S,string in):S(S) {
 	k = 0;
 	for (char c : in)
 		if (c != 0)
