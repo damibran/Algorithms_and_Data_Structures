@@ -38,10 +38,18 @@ public:
 	Set operator - (const Set&)const;
 	Set& operator= (const Set&);
 	char* to_String();
-	Set() :S('A' + cnt) {};
+	Set() :S('A' + cnt++) 
+	{
+		if (debug)
+			printf("\ncreating %c with default constructor", S);
+	};
 	Set(const Set&);
-	Set(char, std::string in);
-	~Set() { delete first; }
+	Set(std::string in);
+	~Set() { 
+		if (debug)
+			printf("\ndeleting %c", S);
+		delete first; 
+	}
 	Set(char S);
 	void add(char c);
 	int get_len();
@@ -65,7 +73,6 @@ char* Set::to_String()
 		c = 'a' + i;
 		while (cur != nullptr)
 		{
-			//std::cout << cur->el << '\n';
 			if (cur->el == c)
 				res[l++] = cur->el;
 
@@ -114,9 +121,9 @@ Set& Set::operator &= (const Set& B)
 
 Set Set::operator & (const Set& B) const
 {
-	Set C(*this);
 	if (debug)
 		printf("\noperation & %c with %c", S, B.S);
+	Set C(*this);
 	return (C &= B);
 }
 
@@ -147,9 +154,9 @@ Set& Set::operator-= (const Set& B)
 
 Set Set::operator - (const Set& B) const
 {
-	Set C(*this);
 	if (debug)
 		printf("\noperation - %c with %c", S, B.S);
+	Set C(*this);
 	return (C -= B);
 }
 
@@ -182,9 +189,9 @@ Set& Set::operator |= (const Set& B)
 
 Set Set::operator | (const Set& B) const
 {
-	Set C(*this);
 	if (debug)
 		printf("\noperation | %c with %c", S, B.S);
+	Set C(*this);
 	return (C |= B);
 }
 
@@ -248,10 +255,11 @@ int Set::get_len()
 	return c;
 }
 
-Set::Set(const Set& a) {
+Set::Set(const Set& a): S('A' + cnt++) {
 
 	Node* curA = a.first;
-	S = a.S;
+	if (debug)
+		printf("\ncreating copy %c of %c", S, a.S);
 	while (curA != nullptr)
 	{
 		add(curA->el);
@@ -259,9 +267,10 @@ Set::Set(const Set& a) {
 	}
 }
 
-Set::Set(char S) : S(S)
+Set::Set(char S) : S('A' + cnt++)
 {
-	cnt++;
+	if (debug)
+		printf("\ncreating %c from char", S);
 	for (int i = 0; i < N; i++)
 	{
 		if (rand() % 2) add('a' + i);
@@ -274,7 +283,9 @@ Set::Set(char S) : S(S)
 	delete[] res;
 }
 
-Set::Set(char S, std::string in) : S(S) {
+Set::Set(std::string in) : S('A'+cnt++) {
+	if (debug)
+		printf("\ncreating %c from string", S);
 
 	for (int i = 0; i < in.length(); i++)
 		add(in[i]);
