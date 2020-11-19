@@ -41,7 +41,11 @@ public:
 	Set() :S('A' + cnt) {};
 	Set(const Set&);
 	Set(char, std::string in);
-	~Set() { delete first; }
+	~Set() { 
+		if (debug)
+			printf("\ndeleting %c", S);
+		delete first; 
+	}
 	Set(char S);
 	void add(char c);
 	int get_len();
@@ -65,7 +69,6 @@ char* Set::to_String()
 		c = 'a' + i;
 		while (cur != nullptr)
 		{
-			//std::cout << cur->el << '\n';
 			if (cur->el == c)
 				res[l++] = cur->el;
 
@@ -252,6 +255,8 @@ Set::Set(const Set& a) {
 
 	Node* curA = a.first;
 	S = a.S;
+	if (debug)
+		printf("\ncreating copy of %c", S);
 	while (curA != nullptr)
 	{
 		add(curA->el);
@@ -261,6 +266,9 @@ Set::Set(const Set& a) {
 
 Set::Set(char S) : S(S)
 {
+	if (debug)
+		printf("\ncreating %c from char", S);
+
 	cnt++;
 	for (int i = 0; i < N; i++)
 	{
@@ -275,6 +283,8 @@ Set::Set(char S) : S(S)
 }
 
 Set::Set(char S, std::string in) : S(S) {
+	if (debug)
+		printf("\ncreating %c from string", S);
 
 	for (int i = 0; i < in.length(); i++)
 		add(in[i]);

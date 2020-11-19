@@ -25,7 +25,11 @@ public:
 	Set(char, string);
 	Set(const Set&);
 	Set& operator = (const Set&);
-	~Set() { delete[] A; }
+	~Set() { 
+		if (debug)
+			printf("\ndeleting %c", S);
+		delete[] A;
+	}
 };
 
 Set& Set::operator &= (const Set& B)
@@ -115,16 +119,25 @@ void Set::Show()
 	cout << endl << S << " = [" << A << "]" << endl;
 }
 
-Set::Set() : n(0), S('A' + cnt), A(new char[N + 1]) { A[0] = 0; }
+Set::Set() : n(0), S('A' + cnt), A(new char[N + 1]) 
+{ 
+	if (debug)
+		printf("\ncreating %c with default constructor", S);
+	A[0] = 0;
+}
 
-Set::Set(char S, string set) : S(S), n(0), A(new char[N+1])
+Set::Set(char S, string set) : S(S), n(0), A(new char[N + 1])
 {
+	if (debug)
+		printf("\ncreating %c from string", S);
 	for (int i = 0; i < set.length(); ++i) A[n++] = set[i];
 	A[n] = 0;
 }
 
 Set::Set(char) : S('A' + cnt++), n(0), A(new char[N + 1])
 {
+	if (debug)
+		printf("\ncreating %c from char", S);
 	for (int i = 0; i < N; i++)
 	{
 		if (rand() % 2) A[n++] = i + 'a';
@@ -135,6 +148,8 @@ Set::Set(char) : S('A' + cnt++), n(0), A(new char[N + 1])
 
 Set::Set(const Set& B) : S(B.S), n(B.n), A(new char[N + 1])
 {
+	if (debug)
+		printf("\ncreating copy of %c", S);
 	char* dst(A), * src(B.A);
 	while (*dst++ = *src++);
 }

@@ -24,7 +24,10 @@ public:
 	Set(char,string in);
 	void Show();
 	Set();
-	~Set() {}
+	~Set() {
+		if (debug)
+			printf("\ndeleting %c", S);
+	}
 };
 
 Set& Set::operator = (const Set& B)
@@ -81,11 +84,15 @@ Set Set::operator & (const Set& B)
 }
 
 Set::Set():S('A'+cnt) {
+	if (debug)
+		printf("\ncreating %c from default constructor", S);
 	k = 0;
 }
 
 Set::Set(char S):S(S)
 {
+	if (debug)
+		printf("\ncreating %c from char", S);
 	cnt++;
 	k = 0;
 	for (int i = 0; i < N; i++)
@@ -104,6 +111,8 @@ Set::Set(char S):S(S)
 }
 
 Set::Set(char S,string in):S(S) {
+	if (debug)
+		printf("\ncreating %c from string", S);
 	k = 0;
 	for (char c : in)
 		if (c != 0)
