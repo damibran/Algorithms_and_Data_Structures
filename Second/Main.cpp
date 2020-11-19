@@ -6,11 +6,11 @@
 using namespace std;
 
 int Set::N = 26, Set::cnt = 0, Set::debug = 0;
-const long q0 = 1;
+const long q0 = 1000000;
 
-char* generate_union()
+char* generate_union(int k)
 {
-    int m = rand() % 26;
+    int m = rand() % k;
     int n = 0;
     char* set = new char[26];
     for (int i = 0; i < m; i++)
@@ -31,7 +31,7 @@ int main()
     for (long q = 0; q < q0; q++) E = ((A & B) - C) | D;
     clock_t end = clock();
 
-    cout << endl << "((A & B) \\ C) | D";
+    cout << endl << "E = ((A & B) \\ C) | D";
     E.Show();
     cout << "Time of one = " << (float)(end - begin) / CLK_TCK / q0 << endl;
 
@@ -40,7 +40,7 @@ int main()
         in[j] = new char* [4];
         for (int i = 0; i < 4; i++)
         {
-            in[j][i] = generate_union();
+            in[j][i] = generate_union(Set::N);
         }
     }
     begin = clock();

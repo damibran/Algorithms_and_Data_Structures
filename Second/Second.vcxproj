@@ -147,6 +147,9 @@
     <ClInclude Include="List.h" />
     <ClInclude Include="word.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="4th_Squad_lab_2.odt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -28,7 +28,7 @@ private:
 	Node* last = nullptr;
 
 public:
-	static int N, cnt,debug;
+	static int N, cnt, debug;
 
 	Set& operator |= (const Set&);
 	Set operator | (const Set&)const;
@@ -38,9 +38,9 @@ public:
 	Set operator - (const Set&)const;
 	Set& operator= (const Set&);
 	char* to_String();
-	Set():S('A'+cnt) {};
+	Set() :S('A' + cnt) {};
 	Set(const Set&);
-	Set(char,std::string in);
+	Set(char, std::string in);
 	~Set() { delete first; }
 	Set(char S);
 	void add(char c);
@@ -274,7 +274,7 @@ Set::Set(char S) : S(S)
 	delete[] res;
 }
 
-Set::Set(char S,std::string in): S(S) {
+Set::Set(char S, std::string in) : S(S) {
 
 	for (int i = 0; i < in.length(); i++)
 		add(in[i]);

@@ -19,7 +19,7 @@ public:
 	Set operator & (const Set&);
 	Set& operator -= (const Set&);
 	Set operator - (const Set&);
-	Set(char,string in);
+	Set(char, string in);
 	Set(char S);
 	void Show();
 	Set();
@@ -87,13 +87,13 @@ Set Set::operator & (const Set& B)
 	return (*this &= B);
 }
 
-Set::Set():A('A'+cnt) {
+Set::Set() :A('A' + cnt) {
 	for (int i = 0; i < 26; i++) {
 		S[i] = false;
 	}
 }
 
-Set::Set(char A):A(A)
+Set::Set(char A) :A(A)
 {
 	cnt++;
 	for (int i = 0; i < 26; i++) {
@@ -112,7 +112,7 @@ Set::Set(char A):A(A)
 	cout << "]" << endl;
 }
 
-Set::Set(char A,string in): A(A) {
+Set::Set(char A, string in) : A(A) {
 	for (int i = 0; i < 26; i++) {
 		S[i] = false;
 	}
@@ -126,6 +126,6 @@ void Set::Show()
 	cout << endl << A << " = [";
 	for (int i = 0; i < 26; i++)
 		if (S[i])
-			cout << char(i+ 'a');
+			cout << char(i + 'a');
 	cout << "]" << endl;
 }

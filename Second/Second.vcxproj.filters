@@ -33,4 +33,7 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="4th_Squad_lab_2.odt" />
+  </ItemGroup>
 </Project>

@@ -10,7 +10,6 @@ struct list {
 	~list() { delete next; }
 };
 
-
 list* delete_elem(list* lst, list* root);
 void add(list** head, char c);
 char* list_to_str(list* head);
@@ -35,10 +34,8 @@ void proc_by_list(char** in, bool debug, int);
 void proc_by_word(char** in, bool debug, int i);
 void proc_by_bool_array(char** in, bool debug, int i);
 void proc_by_array(char** in, bool debug, int);
-char* generate_union();
+char* generate_union(int);
 void sort_array(char* in);
-
-
 
 int main()
 {
@@ -52,16 +49,14 @@ int main()
 
 	char*** in = new char** [N];
 
-
 	for (int j = 0; j < N; j++) {
 		in[j] = new char* [4];
 		for (int i = 0; i < 4; i++)
 		{
-			in[j][i] = generate_union();
+			in[j][i] = generate_union(26);
 		}
 
 	}
-
 
 	while (user_input != 0) {
 		if (debug)
@@ -162,8 +157,8 @@ int main()
 	return 0;
 }
 
-char* generate_union() {
-	int m = rand() % 6;
+char* generate_union(int k) {
+	int m = rand() % k;
 	char* S = new char[26];
 	char* St = new char[26];
 	for (int i = 0; i < m; i++)
@@ -535,12 +530,12 @@ list* delete_elem(list* lst, list* root)
 	list* temp = nullptr;
 	if (len(root) != 0) {
 		temp = root;
-		while (temp->next != lst) // просматриваем список начиная с корня
-		{ // пока не найдем узел, предшествующий lst
+		while (temp->next != lst)
+		{
 			temp = temp->next;
 		}
-		temp->next = lst->next; // переставляем указатель
-		free(lst); // освобождаем память удаляемого узла
+		temp->next = lst->next;
+		free(lst);
 	}
 	return(temp);
 
