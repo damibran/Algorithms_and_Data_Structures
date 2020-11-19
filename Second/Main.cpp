@@ -1,4 +1,7 @@
-#include "bool_array.h"
+//#include "bool_array.h"
+#include "Array.h"
+//#include "List.h"
+//#include "word.h"
 #include <iostream>
 #include <string.h>
 #include <stdlib.h>
@@ -38,7 +41,8 @@ int main()
         cout << "Time of one = " << (float)(end - begin) / CLK_TCK / q0 << endl;
     }
     printf("\n////////////////////////////////////////////////////////////////////////////////////////////////////\n");
-    {
+    {   
+        Set::cnt = 0;
         for (long j = 0; j < q0; j++)
         {
             in[j] = new char* [4];
@@ -50,10 +54,10 @@ int main()
         clock_t begin = clock();
         for (long i = 0; i < q0; i++)
         {
-            Set A('A', in[i][0]);
-            Set B('B', in[i][1]);
-            Set C('C', in[i][2]);
-            Set D('D', in[i][3]);
+            Set A(in[i][0]);
+            Set B(in[i][1]);
+            Set C(in[i][2]);
+            Set D(in[i][3]);
             Set E;
             E = ((A & B) - C) | D;
         }

@@ -19,7 +19,7 @@ public:
 	Set operator & (const Set&);
 	Set& operator -= (const Set&);
 	Set operator - (const Set&);
-	Set(char, string in);
+	Set(string in);
 	Set(char S);
 	void Show();
 	Set(const Set& B);
@@ -95,7 +95,7 @@ Set Set::operator & (const Set& B)
 	return (C &= B);
 }
 
-Set::Set() :A('A' + cnt) {
+Set::Set() :A('A' + cnt++) {
 	if (debug)
 		printf("\ncreating %c from default constructor", A);
 	for (int i = 0; i < 26; i++) {
@@ -103,11 +103,10 @@ Set::Set() :A('A' + cnt) {
 	}
 }
 
-Set::Set(char A) :A(A)
+Set::Set(char A) :A('A' + cnt++)
 {
 	if (debug)
 		printf("\ncreating %c from char", A);
-	cnt++;
 	for (int i = 0; i < 26; i++) {
 		S[i] = false;
 	}
@@ -117,23 +116,23 @@ Set::Set(char A) :A(A)
 		if (rand() % 2) S[i] = true;
 	}
 
-	cout << A << " = [";
+	cout << endl<< A << " = [";
 	for (int i = 0; i < 26; i++)
 		if (S[i])
 			cout << char(i + 'a');
 	cout << "]" << endl;
 }
 
-Set::Set(const Set& B) : A(B.A)
+Set::Set(const Set& B) : A('A'+cnt++)
 {
 	if (debug)
-		printf("\ncreating copy of %c", A);
+		printf("\ncreating copy %c of %c",A , B.A);
 	for (int i = 0; i < 26; i++) {
 		S[i] = B.S;
 	}
 }
 
-Set::Set(char A, string in) : A(A) {
+Set::Set(string in) : A('A' + cnt++) {
 	if (debug)
 		printf("\ncreating %c from string", A);
 	for (int i = 0; i < 26; i++) {

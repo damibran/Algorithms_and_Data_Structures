@@ -22,7 +22,7 @@ public:
 	void Show();
 	Set(char);
 	Set();
-	Set(char, string);
+	Set(string);
 	Set(const Set&);
 	Set& operator = (const Set&);
 	~Set() { 
@@ -126,7 +126,7 @@ Set::Set() : n(0), S('A' + cnt), A(new char[N + 1])
 	A[0] = 0;
 }
 
-Set::Set(char S, string set) : S(S), n(0), A(new char[N + 1])
+Set::Set(string set) : S('A' + cnt++), n(0), A(new char[N + 1])
 {
 	if (debug)
 		printf("\ncreating %c from string", S);
@@ -146,10 +146,10 @@ Set::Set(char) : S('A' + cnt++), n(0), A(new char[N + 1])
 	cout << '\n' << S << " = [" << A << "]";
 }
 
-Set::Set(const Set& B) : S(B.S), n(B.n), A(new char[N + 1])
+Set::Set(const Set& B) : S('A' + cnt++), n(B.n), A(new char[N + 1])
 {
 	if (debug)
-		printf("\ncreating copy of %c", S);
+		printf("\ncreating copy %c of %c", S, B.S);
 	char* dst(A), * src(B.A);
 	while (*dst++ = *src++);
 }
