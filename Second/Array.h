@@ -119,7 +119,7 @@ void Set::Show()
 	cout << endl << S << " = [" << A << "]" << endl;
 }
 
-Set::Set() : n(0), S('A' + cnt), A(new char[N + 1]) 
+Set::Set() : n(0), S('A' + cnt++), A(new char[N + 1]) 
 { 
 	if (debug)
 		printf("\ncreating %c with default constructor", S);

@@ -305,4 +305,3 @@ void Set::add(char c) {
 		first->next = nullptr;
 	}
 }
-

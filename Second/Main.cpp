@@ -1,6 +1,6 @@
 //#include "bool_array.h"
-#include "Array.h"
-//#include "List.h"
+//#include "Array.h"
+#include "List.h"
 //#include "word.h"
 #include <iostream>
 #include <string.h>
@@ -8,9 +8,8 @@
 #include <time.h>
 using namespace std;
 
-int Set::N = 26, Set::cnt = 0, Set::debug = 1;
-const long q0 = 1;
-
+int Set::N = 26, Set::cnt = 0, Set::debug = 0;
+const long q0 = 1000000;
 char* generate_union(int k)
 {
     int m = rand() % k;

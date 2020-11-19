@@ -53,7 +53,7 @@ int main()
 		in[j] = new char* [4];
 		for (int i = 0; i < 4; i++)
 		{
-			in[j][i] = generate_union(26);
+			in[j][i] = generate_union(13);
 		}
 
 	}
