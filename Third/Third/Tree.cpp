@@ -56,7 +56,7 @@ void Tree::OutNodes(Node* v, int r, int c)
 	if (r && c && (c < 80)) SCREEN[r - 1][c - 1] = v->d; // вывод метки
 	if (r < maxrow) {
 		if (v->lft) OutNodes(v->lft, r + 1, c-(offset >> r)); //левый сын
-		if (v->mdl) OutNodes(v->mdl, r + 1, c);	//Ц средний сын (если нужно)
+		if (v->mdl) OutNodes(v->mdl, r + 1, c);	//Ц средний сын
 		if (v->rgt) OutNodes(v->rgt, r + 1, c + (offset >> r)); //правый сын
 	}
 }

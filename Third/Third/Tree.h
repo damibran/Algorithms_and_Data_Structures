@@ -27,8 +27,8 @@ class Tree
 	void clrscr();
 	Node* MakeNode(int depth);
 	void OutNodes(Node* v, int r, int c);
-	Tree(const Tree&);
-	Tree(Tree&&);
+	Tree(const Tree&) = delete;
+	Tree(Tree&&) = delete;
 	Tree operator = (const Tree&) const = delete;
 	Tree operator = (Tree&&) const = delete;
 
