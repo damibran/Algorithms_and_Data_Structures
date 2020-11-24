@@ -10,7 +10,8 @@ int main()
 {
 	srand(time(0));
 
-	Tree t('a', 'c', 10); 
+	printf("(Lable, depth, side)\n");
+	Tree t('a', 'e', 3); 
 
 	t.MakeTree();
 	t.OutTree();

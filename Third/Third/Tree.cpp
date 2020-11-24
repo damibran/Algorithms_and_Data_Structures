@@ -18,17 +18,17 @@ Tree :: ~Tree() {
 	delete[]SCREEN; delete root;
 }
 
-Node* Tree::MakeNode(int depth)
+Node* Tree::MakeNode(char side,int depth)
 {
 	Node* v = nullptr;
 	int Y = (depth < rand() % 6 + 1) && (num <= 'z');
-	//¬ариант: cout << "Node (" << num << ',' << depth << ")1/0: "; cin >> Y;
+	cout << "Node (" << num << ", " << depth << ", "<< side <<")1/0: "; cin >> Y; // fill via keyboard
 	if (Y) {
 		v = new Node;
 		v->d = num++;
-		v->lft = MakeNode(depth + 1);
-		v->rgt = MakeNode(depth + 1);
-		v->mdl = MakeNode(depth + 1);
+		v->lft = MakeNode('L',depth + 1);
+		v->mdl = MakeNode('M', depth + 1);
+		v->rgt = MakeNode('R',depth + 1);
 	}
 	return v;
 }
@@ -53,10 +53,10 @@ void Tree::clrscr()
 
 void Tree::OutNodes(Node* v, int r, int c)
 {
-	if (r && c && (c < 80)) SCREEN[r - 1][c - 1] = v->d; // вывод метки
+	if (r && c && (c < 80)) SCREEN[r - 1][c - 1] = v->d; // print metku
 	if (r < maxrow) {
-		if (v->lft) OutNodes(v->lft, r + 1, c-(offset >> r)); //левый сын
-		if (v->mdl) OutNodes(v->mdl, r + 1, c);	//Ц средний сын
-		if (v->rgt) OutNodes(v->rgt, r + 1, c + (offset >> r)); //правый сын
+		if (v->lft) OutNodes(v->lft, r + 1, c-(offset >> r)); //left child
+		if (v->mdl) OutNodes(v->mdl, r + 1, c);	//Ц mid child
+		if (v->rgt) OutNodes(v->rgt, r + 1, c + (offset >> r)); //right child
 	}
 }

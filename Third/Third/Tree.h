@@ -25,7 +25,7 @@ class Tree
 	int maxrow, offset;
 	char** SCREEN;
 	void clrscr();
-	Node* MakeNode(int depth);
+	Node* MakeNode(char ,int depth);
 	void OutNodes(Node* v, int r, int c);
 	Tree(const Tree&) = delete;
 	Tree(Tree&&) = delete;
@@ -38,7 +38,7 @@ public:
 	~Tree();
 	void MakeTree()
 	{
-		root = MakeNode(0);
+		root = MakeNode('M',0);
 	}
 	bool exist() { return root != nullptr; }
 	int DFS();
