@@ -13,7 +13,7 @@ int main()
 {
 	srand(time(0));
 
-	printf("(Lable, depth, side)\n");
+	printf("(Lable, depth, parent, side)\n");
 	Tree t('a', 'e', 7); 
 
 	t.MakeTree();
