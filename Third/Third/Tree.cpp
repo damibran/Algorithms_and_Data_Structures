@@ -1,6 +1,3 @@
-// This is a personal academic project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
 #include "Tree.h"
 #include <iostream>
 
@@ -21,14 +18,14 @@ Tree :: ~Tree() {
 Node* Tree::MakeNode(char parent ,char side, int depth)
 {
 	Node* v = nullptr;
-	int Y = (depth < rand() % 6 + 1) && (num <= maxnum);
-	cout << "Node (" << num << ", " << depth << ", "<< parent << ", " << side << ")1/0: "; cin >> Y; // fill via keyboard
+	int Y = (depth < rand() % 5 + 1) && (num <= maxnum);
+	//cout << "Node (" << num << ", " << depth << ", "<< parent << ", " << side << ")1/0: "; cin >> Y; // fill via keyboard
 	if (Y) {
 		v = new Node;
 		v->d = num++;
-		v->lft = MakeNode(num-1,'L', depth + 1);
-		v->mdl = MakeNode(num - 1,'M', depth + 1);
-		v->rgt = MakeNode(num - 1,'R', depth + 1);
+		v->lft = MakeNode(v->d,'L', depth + 1);
+		v->mdl = MakeNode(v->d,'M', depth + 1);
+		v->rgt = MakeNode(v->d,'R', depth + 1);
 	}
 	return v;
 }
@@ -59,13 +56,16 @@ void Tree::OutNodes(Node* v, int r, int c)
 		if (v->mdl) OutNodes(v->mdl, r + 1, c);	//– mid child
 		if (v->rgt) OutNodes(v->rgt, r + 1, c + (offset >> r)); //right child
 	}
+	std::cout << "F";
 }
 
 template <class Item> class QUEUE
 {
-	Item* Q; int h, t, N;
+	Item* Q; 
+	int h, t, N;
 public:
-	QUEUE(int maxQ) : h(0), t(0), N(maxQ), Q(new Item[maxQ + 1]) { }
+	QUEUE(int maxQ) 
+	: h(0), t(0), N(maxQ), Q(new Item[maxQ + 1]) { }
 	int empty() const {
 		return (h % N) == t;
 	}
@@ -88,7 +88,7 @@ public:
 int Tree::BFS()
 {
 	const int MaxQ = 20; //максимальный размер очереди
-	int count = 0;
+	int count = -1;
 	QUEUE < Node* > Q(MaxQ);  //создание очереди указателей на узлы
 	Q.push(root); // QUEUE <- root поместить в очередь корень дерева 
 	while (!Q.empty()) //пока очередь не пуста
