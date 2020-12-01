@@ -52,9 +52,9 @@ void Tree::OutNodes(Node* v, int r, int c)
 {
 	if (r && c && (c < 80)) SCREEN[r - 1][c - 1] = v->d; // print metku
 	if (r < maxrow) {
-		if (v->lft) OutNodes(v->lft, r + 1, c - (offset >> r)); //left child
+		if (v->lft) OutNodes(v->lft, r + 1, c - (offset >> r) - 1); //left child
 		if (v->mdl) OutNodes(v->mdl, r + 1, c);	//– mid child
-		if (v->rgt) OutNodes(v->rgt, r + 1, c + (offset >> r)); //right child
+		if (v->rgt) OutNodes(v->rgt, r + 1, c + (offset >> r) + 1); //right child
 	}
 }
 

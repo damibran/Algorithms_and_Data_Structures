@@ -8,7 +8,7 @@ int main()
 	srand(time(0));
 
 	printf("(Lable, depth, parent, side)\n");
-	Tree t('a', 'd', 7); 
+	Tree t('a', 'f', 7); 
 	t.MakeTree();
 
 	if (t.exist())
