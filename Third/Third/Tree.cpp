@@ -56,7 +56,6 @@ void Tree::OutNodes(Node* v, int r, int c)
 		if (v->mdl) OutNodes(v->mdl, r + 1, c);	//– mid child
 		if (v->rgt) OutNodes(v->rgt, r + 1, c + (offset >> r)); //right child
 	}
-	std::cout << "F";
 }
 
 template <class Item> class QUEUE
