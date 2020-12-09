@@ -19,8 +19,7 @@ private:
 	{
 		bool res = true;
 		size_t n = a.size();
-		int i;
-		for (i = 0; i < n; ++i)
+		for (int i = 0; i < n; ++i)
 		{
 			if (a[0] == b[i])
 			{
@@ -32,18 +31,7 @@ private:
 				break;
 			}
 		}
-		if (i == n)
-			res = false;
 		return res;
-	}
-
-	bool cycle_already_added(std::vector<int> that)
-	{
-		bool flag = false;
-		for (int i = 0; i < cycle_number; ++i)
-			if (cycles[i].size() == that.size() && cyclic_cmpr_of_vectors(cycles[i], that))
-				flag = true;
-		return flag;
 	}
 
 public:
@@ -51,9 +39,10 @@ public:
 	Graph(int, int);
 	Graph(int[5][5]);
 	void print_matrix();
-	void DFS_cycle(int v, int par, int color[], int parent[],int);
+	void DFS_cycle(int v, int par, int color[], int parent[]);
 	int getSize();
 	void print_cycles();
+	void check_loops_repeatnce();
 };
 
 Graph::Graph(int size)
@@ -131,26 +120,21 @@ Graph::Graph(int g[5][5])
 	}
 }
 
-void Graph::DFS_cycle(int v, int prnt, int color[], int parent[],int start)
+void Graph::DFS_cycle(int v, int prnt, int color[], int parent[])
 {
+
+	if (color[v] == 2)return;
+
 	if (color[v] == 1)
 	{
-		if (v == start) 
+		int cur = prnt;
+		cycles[cycle_number].push_back(v);
+		while (cur != v)
 		{
-			std::vector<int> temp;
-			int cur = prnt;
-			temp.push_back(v);
-			while (cur != v)
-			{
-				temp.push_back(cur);
-				cur = parent[cur];
-			}
-			if (!cycle_already_added(temp))
-			{
-				cycles[cycle_number] = temp;
-				cycle_number++;
-			}
+			cycles[cycle_number].push_back(cur);
+			cur = parent[cur];
 		}
+		cycle_number++;
 		return;
 	}
 
@@ -160,10 +144,10 @@ void Graph::DFS_cycle(int v, int prnt, int color[], int parent[],int start)
 
 	for (int i = 0; i < m_size; ++i)
 	{ // проверяем для нее все смежные вершины
-		if (arr[v][i] == 1)
-			DFS_cycle(i, v, color, parent,start);
+		if (arr[v][i] == 1 && parent[i] != v)
+			DFS_cycle(i, v, color, parent);
 	}
-	color[v] = 0;
+	color[v] = 2;
 }
 
 int Graph::getSize()
@@ -177,7 +161,7 @@ void Graph::print_cycles()
 		if (cycles[i][0] != -1)
 		{
 			std::cout << cycles[i][0] << "-";
-			for (int j = (int)cycles[i].size() - 1; j > 0; --j)
+			for (int j = (int)cycles[i].size()-1; j > 0; --j)
 			{
 				std::cout << cycles[i][j] << "-";
 			}
@@ -185,25 +169,34 @@ void Graph::print_cycles()
 		}
 }
 
+void Graph::check_loops_repeatnce()
+{
+	for (int i = 0; i < cycle_number - 1; ++i)
+		for (int j = i + 1; j < cycle_number; ++j)
+			if (cycles[i].size() == cycles[j].size() && cyclic_cmpr_of_vectors(cycles[i], cycles[j]))
+				cycles[j][0] = -1;
+
+}
+
 int main()
 {
 	srand(time(0));
 
-	int g[5][5] = {
-		{0, 1, 1, 1, 0},
-		{0, 0, 0, 0, 1},
-		{0, 1, 0, 1, 1},
-		{0, 1, 1, 0, 0},
-		{1, 1, 0, 1, 0}
-	};
+	/*int g[5][5] = {
+		{0, 0, 0, 1, 1},
+		{0, 0, 0, 1, 1},
+		{1, 0, 0, 0, 0},
+		{1, 0, 0, 0, 0},
+		{0, 1, 0, 0, 0},
+	};*/
 	
-	Graph G(g);
+	Graph G(5,15);
 
 	G.print_matrix();
 
 	for (int i = 0; i < G.getSize(); ++i)
 	{
-		int* color = new int[G.getSize() * sizeof(int)];
+		int* color = new int[G.getSize()*sizeof(int)];
 		int* parent = new int[G.getSize() * sizeof(int)];
 
 		for (size_t j = 0; j < G.getSize(); ++j)
@@ -212,11 +205,13 @@ int main()
 			parent[j] = -1;
 		}
 
-		G.DFS_cycle(i, -1, color, parent,i);
+		G.DFS_cycle(i, -1, color, parent);
 
 		delete[] color;
 		delete[] parent;
 	}
+
+	G.check_loops_repeatnce();
 
 	std::cout << "\nCycles:\n";
 
