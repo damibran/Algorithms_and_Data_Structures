@@ -12,7 +12,7 @@ class Graph
 private:
 	int m_size;
 	int arr[maxSize][maxSize];
-	std::vector<int> cycles[maxSize*10];
+	std::vector<int> cycles[maxSize*maxSize];
 	int cycle_number = 0;
 
 	bool cyclic_cmpr_of_vectors(std::vector<int> a, std::vector<int> b)
@@ -47,7 +47,6 @@ private:
 	}
 
 public:
-	Graph(int);
 	Graph(int, int);
 	Graph(int[5][5]);
 	void print_matrix();
@@ -56,7 +55,7 @@ public:
 	void print_cycles();
 };
 
-Graph::Graph(int size)
+Graph::Graph(int size,int max)
 {
 	for (int i = 0; i < maxSize; ++i)
 	{
@@ -66,7 +65,7 @@ Graph::Graph(int size)
 		}
 	}
 
-	m_size = size + (rand() % (maxSize - size));
+	m_size = size + (rand() % (max - size));
 	for (int i = 0; i < m_size; ++i)
 	{
 		for (int j = 0; j < m_size; ++j)
@@ -77,33 +76,6 @@ Graph::Graph(int size)
 			}
 		}
 	}
-}
-
-Graph::Graph(int size, int edges)
-{
-	for (int i = 0; i < maxSize; ++i)
-	{
-		for (int j = 0; j < maxSize; ++j)
-		{
-			arr[i][j] = 0;
-		}
-	}
-
-	m_size = size;
-
-	while (edges > 0)
-		for (int i = 0; i < m_size; ++i)
-		{
-			for (int j = 0; j < m_size; ++j)
-			{
-				if (j == i) continue;
-				if (rand() % 2 == 0 && edges > 0)
-				{
-					arr[i][j] = 1;
-					edges -= 1;
-				}
-			}
-		}
 }
 
 void Graph::print_matrix()
@@ -188,16 +160,8 @@ void Graph::print_cycles()
 int main()
 {
 	srand(time(0));
-
-	/*int g[5][5] = {
-		{0, 1, 1, 1, 0},
-		{0, 0, 0, 0, 1},
-		{0, 1, 0, 1, 1},
-		{0, 1, 1, 0, 0},
-		{1, 1, 0, 1, 0}
-	};*/
 	
-	Graph G(5,13);
+	Graph G(5,6);
 
 	G.print_matrix();
 
@@ -217,7 +181,6 @@ int main()
 		delete[] color;
 		delete[] parent;
 	}
-
 	std::cout << "\nCycles:\n";
 
 	G.print_cycles();
