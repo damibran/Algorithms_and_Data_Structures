@@ -12,8 +12,7 @@ class Graph
 private:
 	int m_size;
 	int arr[maxSize][maxSize];
-	std::vector<int> cycles[maxSize*maxSize];
-	int cycle_number = 0;
+	std::vector<std::vector<int>> cycles;
 
 	bool cyclic_cmpr_of_vectors(std::vector<int> a, std::vector<int> b)
 	{
@@ -40,7 +39,7 @@ private:
 	bool cycle_already_added(std::vector<int> that)
 	{
 		bool flag = false;
-		for (int i = 0; i < cycle_number; ++i)
+		for (int i = 0; i < cycles.size(); ++i)
 			if (cycles[i].size() == that.size() && cyclic_cmpr_of_vectors(cycles[i], that))
 				flag = true;
 		return flag;
@@ -119,8 +118,7 @@ void Graph::DFS_cycle(int v, int prnt, int color[], int parent[],int start)
 			}
 			if (!cycle_already_added(temp))
 			{
-				cycles[cycle_number] = temp;
-				cycle_number++;
+				cycles.push_back(temp);
 			}
 		}
 		return;
@@ -145,7 +143,7 @@ int Graph::getSize()
 
 void Graph::print_cycles()
 {
-	for (int i = 0; i < cycle_number; ++i)
+	for (int i = 0; i < cycles.size(); ++i)
 		if (cycles[i][0] != -1)
 		{
 			std::cout << cycles[i][0] << "-";
