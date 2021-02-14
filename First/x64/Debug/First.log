@@ -1,4 +1,0 @@
-﻿  First.cpp
-C:\Users\olege\Desktop\Algorithms_and_Data_Structures\First\First.cpp(50,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-C:\Users\olege\Desktop\Algorithms_and_Data_Structures\First\First.cpp(314,25): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
-  First.vcxproj -> C:\Users\olege\Desktop\Algorithms_and_Data_Structures\First\x64\Debug\First.exe

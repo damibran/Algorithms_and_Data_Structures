@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{b23aad56-6164-4403-813d-11de5073183d}</ProjectGuid>
+    <ProjectGuid>{716bacc8-5495-4b20-b80c-38c2b1c50a07}</ProjectGuid>
     <RootNamespace>First</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -139,7 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="First.cpp" />
+    <ClCompile Include="shape.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="screen.h" />
+    <ClInclude Include="shape.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
