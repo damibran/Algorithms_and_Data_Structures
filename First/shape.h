@@ -4,7 +4,7 @@
 #include <list>
 //==1. Поддержка экрана в форме матрицы символов ==
 char screen[YMAX][XMAX];
-enum color { black = '*', white = '.' };
+enum color { black = '+', white = '|' };
 void screen_init()
 {
 	for (auto y = 0; y < YMAX; ++y)
@@ -67,13 +67,14 @@ struct shape { // Виртуальный базовый класс "фигура"
 	virtual point swest() const = 0;
 	virtual void draw() = 0;		//Рисование
 	virtual void move(int, int) = 0;	//Перемещение
-	virtual void resize(int) = 0;    	//Изменение размера
+	virtual void resize(float) = 0;    	//Изменение размера
 };
 std::list<shape*> shape::shapes;   // Размещение списка фигур
 void shape_refresh() // Перерисовка всех фигур на экране
 {
 	screen_clear();
-	for (auto p : shape::shapes) p->draw(); //Динамическое связывание!!!
+	for (auto p : shape::shapes)
+		p->draw(); //Динамическое связывание!!!
 	screen_refresh();
 }
 class rotatable : virtual public shape { //Фигуры, пригодные к повороту 
@@ -105,9 +106,10 @@ public:
 	point swest() const { return point(w.x < e.x ? w.x : e.x, e.y < w.y ? e.y : w.y); }
 	void move(int a, int b) { w.x += a; w.y += b; e.x += a; e.y += b; }
 	void draw() { put_line(w, e); }
-	void resize(int d) // Увеличение длины линии в (d) раз
+	void resize(float d) // Увеличение длины линии в (d) раз
 	{
-		e.x += (e.x - w.x) * (d - 1); e.y += (e.y - w.y) * (d - 1);
+		e.x += (e.x - w.x) * (d - 1);
+		e.y += (e.y - w.y) * (d - 1);
 	}
 };
 // Прямоугольник
@@ -145,9 +147,18 @@ public:
 	{
 		sw.x += a; sw.y += b; ne.x += a; ne.y += b;
 	}
-	void resize(int d)
+	void resize(float d)
 	{
-		ne.x += (ne.x - sw.x) * (d - 1); ne.y += (ne.y - sw.y) * (d - 1);
+		if (d >= 1)
+		{
+			ne.x += (ne.x - sw.x) * (d - 1);
+			ne.y += (ne.y - sw.y) * (d - 1);
+		}
+		else
+		{
+			ne.x -= (ne.x - sw.x) * d;
+			ne.y -= (ne.y - sw.y) * d;
+		}
 	}
 	void draw()
 	{
