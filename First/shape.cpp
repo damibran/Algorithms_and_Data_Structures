@@ -11,6 +11,11 @@ public:
 	h_circle(point c, int r) : rectangle(point(c.x - r, c.y - r), point(c.x + r, c.y + r)) {}
 
 	void draw();
+
+	int radius()
+	{
+		return (ne.x - sw.x) / 2;
+	}
 };
 void h_circle::draw() //Алгоритм Брезенхэма для окружностей
 {   //(выдаются два сектора, указываемые значением reflected)
@@ -67,10 +72,10 @@ public:
 		w *= d;
 		h *= d;
 		rectangle::resize(d);
-		l_eye.resize(3 * d / 4);
-		l_eye.move(swest().x - l_eye.swest().x + 2 * d, swest().y - l_eye.swest().y + h * 2 / 4);
-		r_eye.resize(3*d/4);
-		r_eye.move(swest().x - r_eye.swest().x + w - 5 * d, swest().y - r_eye.swest().y +  h * 2 / 4);
+		l_eye.resize(2*d / 3);
+		l_eye.move(swest().x + 2*d - l_eye.swest().x, swest().y - l_eye.swest().y + h * 2 / 4);
+		r_eye.resize(2*d/3);
+		r_eye.move(neast().x - r_eye.radius()*2 - 2*d - r_eye.swest().x, swest().y - r_eye.swest().y +  h * 2 / 4);
 		mouth.resize(d);
 		mouth.move(swest().x - mouth.swest().x +2*d, swest().y - mouth.swest().y +  h /4);
 
@@ -80,8 +85,8 @@ myshape::myshape(point a, point b)
 	: rectangle(a, b),	//Инициализация базового класса
 	w(neast().x - swest().x + 1), // Инициализация данных
 	h(neast().y - swest().y + 1), // - строго в порядке объявления!
-	l_eye(point(swest().x + 2, swest().y + h * 3 / 4),2),
-	r_eye(point(swest().x + w - 4, swest().y + h * 3 / 4), 2),
+	l_eye(point(swest().x + 3, swest().y + h * 3 / 4),1),
+	r_eye(point(neast().x - r_eye.radius() * 2 - 3, swest().y + h * 3 / 4), 1),
 	mouth(point(swest().x + 2, swest().y + h / 4), w - 4)
 { }
 void myshape::draw()
@@ -122,7 +127,7 @@ int main()
 	hat.resize(3);
 	brim.resize(3);
 	face.resize(3);
-	face.move(-10, -10);
+	face.move(-8, -9);
 	shape_refresh();
 	std::cout << "=== Prepared... ===\n";
 	std::cin.get(); //Смотреть результат поворотов/отражений
