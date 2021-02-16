@@ -1,8 +1,8 @@
 #pragma once
 
 #include<iostream>
-const int XMAX = 120; //Размер экрана
-const int YMAX = 50;
+const int XMAX = 100; //Размер экрана
+const int YMAX = 100;
 class point {	//Точка на экране
 public:
 	int x, y;
