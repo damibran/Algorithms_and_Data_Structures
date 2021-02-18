@@ -1,106 +1,13 @@
-#define _CRT_SECURE_NO_WARNINGS
-#include "screen.h"
-#include "shape.h"
-#include <wchar.h>
-#include <cwchar>
 #define _WIN32_WINNT 0x0500
 //it is important that the above line be typed
 //  BEFORE <windows.h> is included
 #include <windows.h>
 
-// ПРИМЕР ДОБАВКИ: дополнительный фрагмент - полуокружность
-class h_circle : public shape
-{
-	point center;
-	int R;
-public:
-	h_circle(point c, int r) : center(c), R(r) {}
-
-	point north() const { return point(center.x, center.y + R); }
-	point south() const { return point(center.x, center.y - R); }
-	point east() const { return point(center.x+R, center.y); }
-	point west() const { return point(center.x-R, center.y); }
-	point neast() const { return point(center.x+R, center.y+R); }
-	point seast() const { return point(center.x+R, center.y-R); }
-	point nwest() const { return point(center.x-R, center.y+R); }
-	point swest() const { return point(center.x-R, center.y-R); }
-	void draw();		//Рисование
-	void move(int, int);	//Перемещение
-	void resize(float);    	//Изменение размера
-
-	int radius()
-	{
-		return R;
-	}
-};
-void h_circle::draw() //Алгоритм Брезенхэма для окружностей
-{   //(выдаются два сектора, указываемые значением reflected)
-	int x0 = center.x, y0 = center.y;
-	int radius = R;
-	int x = 0, y = radius, delta = 1 - 2 * radius, error = 0;
-	float k = 1;
-	while (y >= 0)
-	{ // Цикл рисования
-
-		put_point(x0 + x, y0 + y * k);
-		put_point(x0 + x, y0 - y * k);
-		put_point(x0 - x, y0 + y * k);
-		put_point(x0 - x, y0 - y * k);
-
-		error = 2 * (delta + y) - 1;
-		if (delta < 0 && error <= 0)
-		{
-			++x;
-			delta += 2 * x + 1;
-			continue;
-		}
-		error = 2 * (delta - x) - 1;
-		if (delta > 0 && error > 0)
-		{
-			--y;
-			delta += 1 - 2 * y;
-			continue;
-		}
-		delta += 2 * (++x - --y);
-	}
-}
-void h_circle::resize(float d)
-{
-	R *= d;
-}
-void h_circle::move(int a, int b)
-{
-	center.x += a;
-	center.y += b;
-}
-
-class hat_circle : public rectangle
-{
-	int w, h;
-	h_circle circle;
-public:
-	hat_circle(point a, point b) : rectangle(a, b),
-		w(neast().x - swest().x),
-		h(neast().y - swest().y),
-		circle(point(south().x, east().y), w >= h ? h / 2 : w / 2) {
-		std::cout << east().y;
-	}
-	void resize(float d);
-	void move(int, int);
-};
-
-void hat_circle::move(int a, int b)
-{
-	rectangle::move(a, b);
-	circle.move(a, b);
-}
-
-void hat_circle::resize(float d)
-{
-	rectangle::resize(d);
-	circle.resize(d);
-	circle.move(south().x - circle.south().x, east().y - circle.east().y);
-}
+#include "screen.h"
+#include "shape.h"
+#include "shapes/hat_circle.h"
+#include "shapes/line.h"
+#include "shapes/face.h"
 
 
 void down(shape& p, const shape& q)
@@ -110,51 +17,14 @@ void down(shape& p, const shape& q)
 	p.move(n.x - s.x, n.y - s.y - 1);
 }
 // Cборная пользовательская фигура - физиономия
-class myshape : public rectangle { // Моя фигура ЯВЛЯЕТСЯ
-	int w, h;			             //        прямоугольником
-	h_circle l_eye; // левый глаз – моя фигура СОДЕРЖИТ линию
-	h_circle r_eye; // правый глаз
-	line mouth; // рот
-public:
-	myshape(point, point);
-	void draw();
-	void move(int, int);
-	void resize(float d)
-	{
-		w *= d;
-		h *= d;
-		rectangle::resize(d);
-		l_eye.resize(2 * d / 3);
-		l_eye.move(swest().x + 2 * d - l_eye.swest().x, neast().y - l_eye.radius() - 2 * d - l_eye.swest().y);
-		r_eye.resize(2 * d / 3);
-		r_eye.move(neast().x - r_eye.radius() * 2 - 2 * d - r_eye.swest().x, neast().y - r_eye.radius() - 2 * d - r_eye.swest().y);
-		mouth.resize(d);
-		mouth.move(swest().x - mouth.swest().x + 2 * d, swest().y - mouth.swest().y + h / 4);
 
-	}
-};
-myshape::myshape(point a, point b)
-	: rectangle(a, b),	//Инициализация базового класса
-	w(neast().x - swest().x + 1), // Инициализация данных
-	h(neast().y - swest().y + 1), // - строго в порядке объявления!
-	l_eye(point(swest().x + 3, neast().y - 1 - 1), 1),
-	r_eye(point(neast().x - 1 * 2 - 1, neast().y - 1 - 1), 1),
-	mouth(point(swest().x + 2, swest().y + h / 4), w - 4)
-{ }
-void myshape::draw()
-{
-	rectangle::draw(); //Контур лица (глаза и нос рисуются сами!) 
-	int a = (swest().x + neast().x) / 2;
-	int b = (swest().y + neast().y) / 2;
-	put_point(point(a, b)); // Нос – существует только на рисунке!
+void up(shape& p, const shape& q) // поместить p над q
+{	//Это ОБЫЧНАЯ функция, не член класса! Динамическое связывание!!
+	point n = q.north();
+	point s = p.south();
+	p.move(n.x - s.x, n.y - s.y + 1);
 }
-void myshape::move(int a, int b)
-{
-	rectangle::move(a, b);
-	l_eye.move(a, b);
-	r_eye.move(a, b);
-	mouth.move(a, b);
-}
+
 int main()
 {
 	HWND console = GetConsoleWindow();
@@ -169,7 +39,7 @@ int main()
 	//== 1.Объявление набора фигур ==
 	hat_circle hat(point(1, 1), point(15, 7));
 	line brim(point(0, 15), 17);
-	myshape face(point(15, 10), point(27, 18));
+	face face(point(15, 10), point(27, 18));
 	shape_refresh();
 	std::cout << "=== Generated... ===\n";
 	std::cin.get(); //Смотреть исходный набор

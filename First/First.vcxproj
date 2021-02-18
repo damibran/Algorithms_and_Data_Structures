@@ -144,6 +144,11 @@
   <ItemGroup>
     <ClInclude Include="screen.h" />
     <ClInclude Include="shape.h" />
+    <ClInclude Include="shapes\circle.h" />
+    <ClInclude Include="shapes\face.h" />
+    <ClInclude Include="shapes\hat_circle.h" />
+    <ClInclude Include="shapes\line.h" />
+    <ClInclude Include="shapes\rectangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
