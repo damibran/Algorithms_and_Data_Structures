@@ -5,7 +5,7 @@
 
 class face : public rectangle { // ћо€ фигура я¬Ћя≈“—я
 	int w, h;			             //        пр€моугольником
-	circle l_eye; // левый глаз Ц мо€ фигура —ќƒ≈–∆»“ линию
+	circle l_eye; // левый глаз
 	circle r_eye; // правый глаз
 	line mouth; // рот
 public:

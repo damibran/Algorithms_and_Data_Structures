@@ -6,11 +6,6 @@ public:
 	virtual void rotate_left() = 0;	//Повернуть влево
 	virtual void rotate_right() = 0;	//Повернуть вправо
 };
-class reflectable : virtual public shape { // Фигуры, пригодные
-public:					     // к зеркальному отражению
-	virtual void flip_horisontally() = 0;	// Отразить горизонтально
-	virtual void flip_vertically() = 0;	          // Отразить вертикально
-};
 // Прямоугольник
 class rectangle : public rotatable {
 	/* nw ------ n ------ ne
