@@ -1,8 +1,8 @@
 #pragma once
 
 #include<iostream>
-const int XMAX = 100; //Размер экрана
-const int YMAX = 100;
+const int XMAX = 60; //Размер экрана
+const int YMAX = 60;
 char screen[YMAX][XMAX];
 enum color { black = '@', white = '.' };
 

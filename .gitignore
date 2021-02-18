@@ -365,3 +365,7 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 *.db
+*.idb
+*.exe
+*.db
+First/.vs/First/v16/.suo

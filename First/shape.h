@@ -12,7 +12,6 @@ protected:
 	Uncopyable(const Uncopyable&&) = delete;
 	Uncopyable& operator=(const Uncopyable&) = delete;
 	Uncopyable& operator=(const Uncopyable&&) = delete;
-
 };
 
 //== 2. Библиотека фигур ==
