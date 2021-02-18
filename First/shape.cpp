@@ -9,22 +9,34 @@
 #include <windows.h>
 
 // ПРИМЕР ДОБАВКИ: дополнительный фрагмент - полуокружность
-class h_circle : public rectangle
+class h_circle : public shape
 {
+	point center;
+	int R;
 public:
-	h_circle(point c, int r) : rectangle(point(c.x - r, c.y - r), point(c.x + r, c.y + r)) {}
+	h_circle(point c, int r) : center(c), R(r) {}
 
-	void draw();
+	point north() const { return point(center.x, center.y + R); }
+	point south() const { return point(center.x, center.y - R); }
+	point east() const { return point(center.x+R, center.y); }
+	point west() const { return point(center.x-R, center.y); }
+	point neast() const { return point(center.x+R, center.y+R); }
+	point seast() const { return point(center.x+R, center.y-R); }
+	point nwest() const { return point(center.x-R, center.y+R); }
+	point swest() const { return point(center.x-R, center.y-R); }
+	void draw();		//Рисование
+	void move(int, int);	//Перемещение
+	void resize(float);    	//Изменение размера
 
 	int radius()
 	{
-		return (ne.x - sw.x) / 2;
+		return R;
 	}
 };
 void h_circle::draw() //Алгоритм Брезенхэма для окружностей
 {   //(выдаются два сектора, указываемые значением reflected)
-	int x0 = (sw.x + ne.x) / 2, y0 = (sw.y + ne.y) / 2;
-	int radius = (ne.x - sw.x) / 2;
+	int x0 = center.x, y0 = center.y;
+	int radius = R;
 	int x = 0, y = radius, delta = 1 - 2 * radius, error = 0;
 	float k = 1;
 	while (y >= 0)
@@ -52,26 +64,35 @@ void h_circle::draw() //Алгоритм Брезенхэма для окружностей
 		delta += 2 * (++x - --y);
 	}
 }
+void h_circle::resize(float d)
+{
+	R *= d;
+}
+void h_circle::move(int a, int b)
+{
+	center.x += a;
+	center.y += b;
+}
 
-class hat_circle: public rectangle
+class hat_circle : public rectangle
 {
 	int w, h;
 	h_circle circle;
 public:
 	hat_circle(point a, point b) : rectangle(a, b),
-		w(neast().x - swest().x ),
-		h(neast().y - swest().y ),
-		circle(point(south().x, east().y), w >= h ? h/2 : w/2) {
+		w(neast().x - swest().x),
+		h(neast().y - swest().y),
+		circle(point(south().x, east().y), w >= h ? h / 2 : w / 2) {
 		std::cout << east().y;
 	}
 	void resize(float d);
 	void move(int, int);
 };
 
-void hat_circle::move(int a,int b)
+void hat_circle::move(int a, int b)
 {
-	rectangle::move(a,b);
-	circle.move(a,b);
+	rectangle::move(a, b);
+	circle.move(a, b);
 }
 
 void hat_circle::resize(float d)
@@ -104,7 +125,7 @@ public:
 		h *= d;
 		rectangle::resize(d);
 		l_eye.resize(2 * d / 3);
-		l_eye.move(swest().x + 2 * d - l_eye.swest().x, neast().y - l_eye.radius() - 2*d - l_eye.swest().y);
+		l_eye.move(swest().x + 2 * d - l_eye.swest().x, neast().y - l_eye.radius() - 2 * d - l_eye.swest().y);
 		r_eye.resize(2 * d / 3);
 		r_eye.move(neast().x - r_eye.radius() * 2 - 2 * d - r_eye.swest().x, neast().y - r_eye.radius() - 2 * d - r_eye.swest().y);
 		mouth.resize(d);
