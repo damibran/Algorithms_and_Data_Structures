@@ -18,7 +18,7 @@ public:
 	point swest() const { return point(center.x - R, center.y - R); }
 	void draw();		//Рисование
 	void move(int, int);	//Перемещение
-	void resize(float);    	//Изменение размера
+	void resize(int);    	//Изменение размера
 
 	int radius()
 	{
@@ -56,7 +56,7 @@ void circle::draw() //Алгоритм Брезенхэма для окружностей
 		delta += 2 * (++x - --y);
 	}
 }
-void circle::resize(float d)
+void circle::resize(int d)
 {
 	R *= d;
 }

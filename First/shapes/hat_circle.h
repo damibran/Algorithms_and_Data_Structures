@@ -13,7 +13,7 @@ public:
 		circle(point(south().x, east().y), w >= h ? h / 2 : w / 2) {
 		std::cout << east().y;
 	}
-	void resize(float d);
+	void resize(int d);
 	void move(int, int);
 };
 
@@ -23,7 +23,7 @@ void hat_circle::move(int a, int b)
 	circle.move(a, b);
 }
 
-void hat_circle::resize(float d)
+void hat_circle::resize(int d)
 {
 	rectangle::resize(d);
 	circle.resize(d);

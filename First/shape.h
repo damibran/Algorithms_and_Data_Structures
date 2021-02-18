@@ -18,7 +18,7 @@ struct shape { // Виртуальный базовый класс "фигура"
 	virtual point swest() const = 0;
 	virtual void draw() = 0;		//Рисование
 	virtual void move(int, int) = 0;	//Перемещение
-	virtual void resize(float) = 0;    	//Изменение размера
+	virtual void resize(int) = 0;    	//Изменение размера
 };
 std::list<shape*> shape::shapes;   // Размещение списка фигур
 void shape_refresh() // Перерисовка всех фигур на экране

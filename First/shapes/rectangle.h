@@ -41,18 +41,10 @@ public:
 	{
 		sw.x += a; sw.y += b; ne.x += a; ne.y += b;
 	}
-	void resize(float d)
+	void resize(int d)
 	{
-		if (d >= 1)
-		{
-			ne.x += (ne.x - sw.x) * (d - 1);
-			ne.y += (ne.y - sw.y) * (d - 1);
-		}
-		else
-		{
-			ne.x -= (ne.x - sw.x) * d;
-			ne.y -= (ne.y - sw.y) * d;
-		}
+		ne.x += (ne.x - sw.x) * (d - 1);
+		ne.y += (ne.y - sw.y) * (d - 1);
 	}
 	void draw()
 	{

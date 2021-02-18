@@ -20,7 +20,7 @@ public:
 	point swest() const { return point(w.x < e.x ? w.x : e.x, e.y < w.y ? e.y : w.y); }
 	void move(int a, int b) { w.x += a; w.y += b; e.x += a; e.y += b; }
 	void draw() { put_line(w, e); }
-	void resize(float d) // Увеличение длины линии в (d) раз
+	void resize(int d) // Увеличение длины линии в (d) раз
 	{
 		e.x += (e.x - w.x) * (d - 1);
 		e.y += (e.y - w.y) * (d - 1);
