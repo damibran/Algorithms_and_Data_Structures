@@ -1,11 +1,23 @@
 #pragma once
-
 #include "screen.h"
 #include <list>
-//==1. Поддержка экрана в форме матрицы символов ==
+
+class Uncopyable
+{
+protected:
+	Uncopyable() = default;
+	~Uncopyable() = default;
+
+	Uncopyable(const Uncopyable&)=delete;
+	Uncopyable(const Uncopyable&&) = delete;
+	Uncopyable& operator=(const Uncopyable&) = delete;
+	Uncopyable& operator=(const Uncopyable&&) = delete;
+
+};
 
 //== 2. Библиотека фигур ==
-struct shape { // Виртуальный базовый класс "фигура"
+struct shape : private Uncopyable
+{ // Виртуальный базовый класс "фигура"
 	static std::list<shape*> shapes;// Список фигур (один на все фигуры!)
 	shape() { shapes.push_back(this); } //Фигура присоединяется к списку
 	virtual point north() const = 0;	//Точки для привязки

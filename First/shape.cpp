@@ -40,6 +40,8 @@ int main()
 	hat_circle hat(point(1, 1), point(15, 7));
 	line brim(point(0, 15), 17);
 	face face(point(15, 10), point(27, 18));
+	circle cc(point(30, 30), 5);
+	circle kk(cc);
 	shape_refresh();
 	std::cout << "=== Generated... ===\n";
 	std::cin.get(); //Смотреть исходный набор
