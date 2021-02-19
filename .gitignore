@@ -369,3 +369,5 @@ FodyWeavers.xsd
 *.exe
 *.db
 First/.vs/First/v16/.suo
+*.db
+First/.vs/First/v16/.suo
