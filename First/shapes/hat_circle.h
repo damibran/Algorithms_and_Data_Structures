@@ -11,7 +11,6 @@ public:
 		w(neast().x - swest().x),
 		h(neast().y - swest().y),
 		circle(point(south().x, east().y), w >= h ? h / 2 : w / 2) {
-		std::cout << east().y;
 	}
 	void resize(int d);
 	void move(int, int);

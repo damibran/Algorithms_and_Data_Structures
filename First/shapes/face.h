@@ -23,7 +23,6 @@ public:
 		r_eye.move(neast().x - r_eye.radius() * 2 - 2 * d - r_eye.swest().x, neast().y - r_eye.radius() - 2 * d - r_eye.swest().y);
 		mouth.resize(d);
 		mouth.move(swest().x - mouth.swest().x + 2 * d, swest().y - mouth.swest().y + h / 4);
-
 	}
 };
 face::face(point a, point b)

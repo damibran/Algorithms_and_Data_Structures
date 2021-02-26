@@ -4,7 +4,7 @@
 const int XMAX = 60; //Размер экрана
 const int YMAX = 60;
 char screen[YMAX][XMAX];
-enum color { black = '@', white = '.' };
+enum color { black = '@', white = ' ' };
 
 class point {	//Точка на экране
 public:
