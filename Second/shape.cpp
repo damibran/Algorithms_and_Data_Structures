@@ -34,14 +34,15 @@ int main()
 
 	//MoveWindow(window_handle, x, y, width, height, redraw_window);
 	MoveWindow(console, r.left, r.top, XMAX * 9, YMAX * 9, TRUE);
+	
 
 	setlocale(LC_ALL, "Rus");
 	screen_init();
+
 	//== 1.ќбъ€вление набора фигур ==
 	hat_circle hat(point(1, 1), point(15, 7));
 	line brim(point(5, 15), 17);
-	face face(point(15, 10), point(27, 18));
-	rectangle test(point(20, 52), point(32, 60));
+	face face(point(20, 52), point(32, 60));
 	shape_refresh();
 	std::cout << "=== Generated... ===\n";
 	std::cin.get(); //—мотреть исходный набор

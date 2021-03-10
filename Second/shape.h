@@ -19,7 +19,9 @@ struct shape : public Uncopyable
 { // Виртуальный базовый класс "фигура"
 	static std::list<shape*> shapes;// Список фигур (один на все фигуры!)
 	shape() { shapes.push_back(this); } //Фигура присоединяется к списку
-	~shape() { shapes.remove(this); std::cout << "Shape Destructed"; }
+	~shape() { shapes.remove(this); 
+	//std::cout << "Shape Destructed"; 
+	}
 	virtual point north() const = 0;	//Точки для привязки
 	virtual point south() const = 0;
 	virtual point east() const = 0;
