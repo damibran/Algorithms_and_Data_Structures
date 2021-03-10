@@ -15,7 +15,7 @@ protected:
 };
 
 //== 2. Библиотека фигур ==
-struct shape : private Uncopyable
+struct shape : public Uncopyable
 { // Виртуальный базовый класс "фигура"
 	static std::list<shape*> shapes;// Список фигур (один на все фигуры!)
 	shape() { shapes.push_back(this); } //Фигура присоединяется к списку
