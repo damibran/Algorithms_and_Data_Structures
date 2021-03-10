@@ -1,8 +1,5 @@
-#define _WIN32_WINNT 0x0500
 //it is important that the above line be typed
 //  BEFORE <windows.h> is included
-#include <windows.h>
-
 #include "screen.h"
 #include "shape.h"
 #include "shapes/hat_circle.h"
@@ -28,13 +25,7 @@ void up(shape& p, const shape& q) // поместить p над q
 
 int main()
 {
-	HWND console = GetConsoleWindow();
-	RECT r;
-	GetWindowRect(console, &r); //stores the console's current dimensions
-
-	//MoveWindow(window_handle, x, y, width, height, redraw_window);
-	MoveWindow(console, r.left, r.top, XMAX * 9, YMAX * 9, TRUE);
-	
+	SetConsoleActiveScreenBuffer(hConsle);
 
 	setlocale(LC_ALL, "Rus");
 	screen_init();

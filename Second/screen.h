@@ -2,10 +2,14 @@
 
 #include "Exceptions/CantPutPoint.h"
 #include<iostream>
+#include <Windows.h>
+
 const int XMAX = 60; //Размер экрана
 const int YMAX = 60;
-char screen[YMAX][XMAX];
+wchar_t screen[YMAX*XMAX];
 enum color { black = '@', white = ' ' };
+HANDLE hConsle = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
+DWORD dwBytesWritten = 0;
 
 class point {	//Точка на экране
 public:
@@ -31,13 +35,22 @@ void screen_clear();
 
 void screen_init()
 {
-	for (auto y = 0; y < YMAX; ++y)
-		for (auto& x : screen[y])  x = white;
+	/*for (auto y = 0; y < YMAX; ++y)
+		for (auto& x : screen[y])  x = white;*/
+
+	for (int y = 0; y < YMAX; ++y)
+	{
+		for (int x = 0; x < XMAX; ++x)
+			screen[y * XMAX + x] = white;
+	}
 }
 void screen_destroy()
 {
-	for (auto y = 0; y < YMAX; ++y)
-		for (auto& x : screen[y])  x = black;
+	for (int y = 0; y < YMAX; ++y)
+	{
+		for (int x = 0; x < XMAX; ++x)
+			screen[y * XMAX + x] = black;
+	}
 }
 bool on_screen(int a, int b) // проверка попадания точки на экран
 {
@@ -45,7 +58,7 @@ bool on_screen(int a, int b) // проверка попадания точки на экран
 }
 void put_point(int a, int b)
 {
-	if (on_screen(a, b)) screen[b][a] = black;
+	if (on_screen(a, b)) screen[b*XMAX + a] = black;
 }
 void put_line(int x0, int y0, int x1, int y1)
 /* Алгоритм Брезенхэма для прямой:
@@ -71,9 +84,12 @@ void put_line(int x0, int y0, int x1, int y1)
 void screen_clear() { screen_init(); } //Очистка экрана
 void screen_refresh() // Обновление экрана
 {
-	for (int y = YMAX - 1; 0 <= y; --y) { // с верхней строки до нижней
-		for (auto x : screen[y])    // от левого столбца до правого
-			std::cout << x;
-		std::cout << '\n';
-	}
+	//for (int y = YMAX - 1; 0 <= y; --y) { // с верхней строки до нижней
+	//	for (auto x : screen[y])    // от левого столбца до правого
+	//		std::cout << x;
+	//	std::cout << '\n';
+	//}
+
+	screen[XMAX * YMAX - 1] = '\0';
+	WriteConsoleOutputCharacter(hConsle, screen, XMAX * YMAX, { 0,0 }, &dwBytesWritten);
 }
