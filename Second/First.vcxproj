@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Exceptions\CantPutPoint.h" />
+    <ClInclude Include="primitive.h" />
     <ClInclude Include="screen.h" />
     <ClInclude Include="shape.h" />
     <ClInclude Include="shapes\circle.h" />

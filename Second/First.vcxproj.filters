@@ -44,5 +44,8 @@
     <ClInclude Include="Exceptions\CantPutPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="primitive.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
