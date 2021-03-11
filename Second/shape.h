@@ -35,10 +35,10 @@ struct shape : public Uncopyable
 	virtual void resize(int) = 0;    	//Изменение размера
 };
 std::list<shape*> shape::shapes;   // Размещение списка фигур
-void shape_refresh() // Перерисовка всех фигур на экране
+void shape_refresh(HANDLE hConsle, DWORD dwBytesWritten) // Перерисовка всех фигур на экране
 {
 	screen_clear();
 	for (auto p : shape::shapes)
 		p->draw(); //Динамическое связывание!!!
-	screen_refresh();
+	screen_refresh(hConsle, dwBytesWritten);
 }

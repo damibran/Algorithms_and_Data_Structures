@@ -25,6 +25,8 @@ void up(shape& p, const shape& q) // поместить p над q
 
 int main()
 {
+	HANDLE hConsle = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
+	DWORD dwBytesWritten = 0;
 	SetConsoleActiveScreenBuffer(hConsle);
 
 	setlocale(LC_ALL, "Rus");
@@ -34,9 +36,11 @@ int main()
 	hat_circle hat(point(1, 1), point(15, 7));
 	line brim(point(5, 15), 17);
 	face face(point(20, 52), point(32, 60));
-	shape_refresh();
-	std::cout << "=== Generated... ===\n";
-	std::cin.get(); //Смотреть исходный набор
+	shape_refresh(hConsle, dwBytesWritten);
+	Sleep(3000);
+
+	//std::cout << "=== Generated... ===\n";
+	//std::cin.get(); //Смотреть исходный набор
 
 //== 2.Подготовка к сборке ==
 	hat.rotate_right();
@@ -44,20 +48,27 @@ int main()
 	brim.resize(3);
 	face.resize(3);
 	face.move(-8, -9);
-	shape_refresh();
-	std::cout << "=== Prepared... ===\n";
-	std::cin.get(); //Смотреть результат поворотов/отражений
+	shape_refresh(hConsle, dwBytesWritten);
+	Sleep(3000);
+
+	//std::cout << "=== Prepared... ===\n";
+	//std::cin.get(); //Смотреть результат поворотов/отражений
 //== 2.1 Исправление ошибок 
-	shape_refresh();
-	std::cout << "=== Fixed ===\n";
-	std::cin.get(); //Смотреть результат поворотов/отражений
+	shape_refresh(hConsle, dwBytesWritten);
+	Sleep(3000);
+
+	//std::cout << "=== Fixed ===\n";
+	//std::cin.get(); //Смотреть результат поворотов/отражений
 //== 3.Сборка изображения ==
 	//face.move(0, -10); // Лицо - в исходное положение
 	up(brim, face);
 	up(hat, brim);
-	shape_refresh();
-	std::cout << "=== Ready! ===\n";
-	std::cin.get(); //Смотреть результат
+	shape_refresh(hConsle, dwBytesWritten);
+	Sleep(3000);
+
+	//std::cout << "=== Ready! ===\n";
+	//std::cin.get(); //Смотреть результат
+
 	screen_destroy();
 	return 0;
 }

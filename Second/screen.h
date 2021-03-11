@@ -1,15 +1,14 @@
 #pragma once
 
+#include <Windows.h>
 #include "Exceptions/CantPutPoint.h"
 #include<iostream>
-#include <Windows.h>
 
 const int XMAX = 60; //Размер экрана
 const int YMAX = 60;
 wchar_t screen[YMAX*XMAX];
 enum color { black = '@', white = ' ' };
-HANDLE hConsle = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
-DWORD dwBytesWritten = 0;
+
 
 class point {	//Точка на экране
 public:
@@ -82,7 +81,7 @@ void put_line(int x0, int y0, int x1, int y1)
 	}
 }
 void screen_clear() { screen_init(); } //Очистка экрана
-void screen_refresh() // Обновление экрана
+void screen_refresh(HANDLE hConsle, DWORD dwBytesWritten ) // Обновление экрана
 {
 	//for (int y = YMAX - 1; 0 <= y; --y) { // с верхней строки до нижней
 	//	for (auto x : screen[y])    // от левого столбца до правого
