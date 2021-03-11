@@ -25,13 +25,7 @@ public:
 	}
 	~Screen()
 	{
-		/*for (int y = 0; y < YMAX; ++y)
-		{
-			for (int x = 0; x < XMAX; ++x)
-				screen[y * XMAX + x] = black;
-		}*/
-		//SetConsoleActiveScreenBuffer(org);
-		//delete[] screen;
+		delete[] screen;
 	}
 	void screen_refresh() // Обновление экрана
 	{

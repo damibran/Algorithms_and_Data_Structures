@@ -49,7 +49,6 @@ int main()
 
 		gScreen.screen_refresh();
 
-		//Sleep(100);
 	}
 
 	return 0;
