@@ -21,13 +21,15 @@ protected:
 //== 2. Библиотека фигур ==
 struct shape
 { // Виртуальный базовый класс "фигура"
-	std::vector<std::unique_ptr<shape>> childs;
+	std::vector<shape*> childs;
 	glm::mat3 transform=glm::mat3(1.0f);
 	std::vector<std::unique_ptr<primitive>> visual;
 	shape(shape&) = delete;
 	shape() = default;
 	void addChild(shape& s)
-	{		childs.push_back(std::unique_ptr<shape>(&s));	}
+	{		
+		childs.push_back(&s);
+	}
 	void drawChild(glm::mat3 trans)
 	{
 		for (int i = 0; i < visual.size(); ++i)
