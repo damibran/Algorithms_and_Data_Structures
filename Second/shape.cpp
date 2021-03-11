@@ -6,7 +6,7 @@
 #include "shapes/line.h"
 #include "shapes/face.h"
 #include "shapes/rectangle.h"
-
+#include "glm/glm.hpp"
 
 void down(shape& p, const shape& q)
 {
