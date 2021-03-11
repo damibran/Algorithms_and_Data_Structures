@@ -38,7 +38,7 @@ void face::draw()
 	rectangle::draw(); //Контур лица (глаза и нос рисуются сами!) 
 	int a = (swest().x + neast().x) / 2;
 	int b = (swest().y + neast().y) / 2;
-	put_point(point(a, b)); // Нос – существует только на рисунке!
+	gScreen.put_point(point(a, b)); // Нос – существует только на рисунке!
 }
 void face::move(int a, int b)
 {

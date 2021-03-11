@@ -34,10 +34,10 @@ void circle::draw() //Алгоритм Брезенхэма для окружностей
 	while (y >= 0)
 	{ // Цикл рисования
 
-		put_point(x0 + x, y0 + y * k);
-		put_point(x0 + x, y0 - y * k);
-		put_point(x0 - x, y0 + y * k);
-		put_point(x0 - x, y0 - y * k);
+		gScreen.put_point(x0 + x, y0 + y * k);
+		gScreen.put_point(x0 + x, y0 - y * k);
+		gScreen.put_point(x0 - x, y0 + y * k);
+		gScreen.put_point(x0 - x, y0 - y * k);
 
 		error = 2 * (delta + y) - 1;
 		if (delta < 0 && error <= 0)

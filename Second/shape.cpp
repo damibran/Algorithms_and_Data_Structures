@@ -25,18 +25,12 @@ void up(shape& p, const shape& q) // поместить p над q
 
 int main()
 {
-	HANDLE hConsle = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
-	DWORD dwBytesWritten = 0;
-	SetConsoleActiveScreenBuffer(hConsle);
-
 	setlocale(LC_ALL, "Rus");
-	screen_init();
-
 	//== 1.ќбъ€вление набора фигур ==
 	hat_circle hat(point(1, 1), point(15, 7));
 	line brim(point(5, 15), 17);
-	face face(point(20, 52), point(32, 60));
-	shape_refresh(hConsle, dwBytesWritten);
+	face face(point(20, 51), point(32, 59));
+	shape_refresh();
 	Sleep(3000);
 
 	//std::cout << "=== Generated... ===\n";
@@ -48,13 +42,13 @@ int main()
 	brim.resize(3);
 	face.resize(3);
 	face.move(-8, -9);
-	shape_refresh(hConsle, dwBytesWritten);
+	shape_refresh();
 	Sleep(3000);
 
 	//std::cout << "=== Prepared... ===\n";
 	//std::cin.get(); //—мотреть результат поворотов/отражений
 //== 2.1 »справление ошибок 
-	shape_refresh(hConsle, dwBytesWritten);
+	shape_refresh();
 	Sleep(3000);
 
 	//std::cout << "=== Fixed ===\n";
@@ -63,12 +57,11 @@ int main()
 	//face.move(0, -10); // Ћицо - в исходное положение
 	up(brim, face);
 	up(hat, brim);
-	shape_refresh(hConsle, dwBytesWritten);
+	shape_refresh();
 	Sleep(3000);
 
 	//std::cout << "=== Ready! ===\n";
 	//std::cin.get(); //—мотреть результат
 
-	screen_destroy();
 	return 0;
 }

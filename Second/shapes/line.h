@@ -23,16 +23,16 @@ public:
 	{
 		try
 		{
-			put_line(w, e);
+			gScreen.put_line(w, e);
 		}
 		catch (CantPutPoint err)
 		{
-			if (east().x >= XMAX)
-				move(XMAX - east().x + 1, 0);
+			if (east().x >= gScreen.XMAX)
+				move(gScreen.XMAX - east().x + 1, 0);
 			else if (west().x < 0)
 				move(-west().x, 0);
-			if (north().y >= YMAX)
-				move(0, YMAX - north().y - 1);
+			if (north().y >= gScreen.XMAX)
+				move(0, gScreen.XMAX - north().y - 1);
 			else if (south().y < 0)
 				move(0, -south().y);
 		}

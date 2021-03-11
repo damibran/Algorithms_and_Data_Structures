@@ -18,7 +18,7 @@ class rectangle : public rotatable {
 protected:
 	point sw, ne;
 public:
-	rectangle(point a, point b) : sw(a), ne(b) { }
+	rectangle(point a, point b) :sw(a), ne(b) { }
 	point north() const { return point((sw.x + ne.x) / 2, ne.y); }
 	point south() const { return point((sw.x + ne.x) / 2, sw.y); }
 	point east() const { return point(ne.x, (sw.y + ne.y) / 2); }
@@ -50,16 +50,16 @@ public:
 	{
 		try
 		{
-			put_line(nwest(), ne);   put_line(ne, seast());
-			put_line(seast(), sw);   put_line(sw, nwest());
+			gScreen.put_line(nwest(), ne);   gScreen.put_line(ne, seast());
+			gScreen.put_line(seast(), sw);   gScreen.put_line(sw, nwest());
 		}
 		catch (CantPutPoint err) {
-			if (east().x >= XMAX)
-				move(XMAX - east().x + 1, 0);
+			if (east().x >= gScreen.XMAX)
+				move(gScreen.XMAX - east().x + 1, 0);
 			else if (west().x < 0)
 				move(-west().x, 0);
-			if (north().y >= YMAX) 
-				move(0, YMAX - north().y-1);
+			if (north().y >= gScreen.YMAX)
+				move(0, gScreen.YMAX - north().y - 1);
 			else if (south().y < 0)
 				move(0, -south().y);
 		}
