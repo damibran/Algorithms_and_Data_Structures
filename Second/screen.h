@@ -25,12 +25,13 @@ public:
 	}
 	~Screen()
 	{
-		for (int y = 0; y < YMAX; ++y)
+		/*for (int y = 0; y < YMAX; ++y)
 		{
 			for (int x = 0; x < XMAX; ++x)
 				screen[y * XMAX + x] = black;
-		}
-		delete[] screen;
+		}*/
+		//SetConsoleActiveScreenBuffer(org);
+		//delete[] screen;
 	}
 	void screen_refresh() // Обновление экрана
 	{

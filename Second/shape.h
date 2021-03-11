@@ -41,6 +41,10 @@ struct shape
 			childs[i]->drawChild(trans*transform);
 		}
 	}
+	void transform(glm::mat3 trans)
+	{
+		transform = trans * transform;
+	}
 };
 
 void shape_refresh() // Перерисовка всех фигур на экране

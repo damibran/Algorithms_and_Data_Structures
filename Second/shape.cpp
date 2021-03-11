@@ -24,11 +24,16 @@ int main()
 	
 	worldObj.addChild(rec);
 	
-	worldObj.drawChild(viewM);
-	
-	gScreen.screen_refresh();
-	
-	Sleep(3000);
+	while (1) 
+	{
+		glm::mat3 t(1.0f);
+		rec.transform
+		worldObj.drawChild(viewM);
+
+		gScreen.screen_refresh();
+
+		Sleep(100);
+	}
 
 	return 0;
 }
