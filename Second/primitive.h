@@ -5,28 +5,28 @@
 class primitive
 {
 public:
-	virtual void drawPrimitive(glm::mat3) = 0;
+	virtual void drawPrimitive(glm::mat4) = 0;
 };
 
 class dot : public primitive
 {
 public:
-	dot(glm::vec2 _p) :p(glm::vec3(_p.x, _p.y, 1)) {}
-	virtual void drawPrimitive(glm::mat3 trans)override
+	dot(glm::vec2 _p) :p(glm::vec4(_p.x, _p.y, 1, 1)) {}
+	virtual void drawPrimitive(glm::mat4 trans)override
 	{
 		int x = (trans * p)[0];
 		int y = (trans * p)[1];
 		gScreen.put_point(x, y);
 	}
 private:
-	glm::vec3 p;
+	glm::vec4 p;
 };
 
 class edge : public  primitive
 {
 public:
-	edge(glm::vec2 _p1, glm::vec2 _p2) : p1(glm::vec3(_p1.x, _p1.y, 1)), p2(glm::vec3(_p2.x, _p2.y, 1)) {}
-	virtual void drawPrimitive(glm::mat3 trans)
+	edge(glm::vec2 _p1, glm::vec2 _p2) : p1(glm::vec4(_p1.x, _p1.y, 1,1)), p2(glm::vec4(_p2.x, _p2.y, 1,1)) {}
+	virtual void drawPrimitive(glm::mat4 trans)
 	{
 		int x0 = (trans * p1)[0];
 		int y0 = (trans * p1)[1];
@@ -59,5 +59,5 @@ public:
 		}
 	}
 private:
-	glm::vec3 p1, p2;
+	glm::vec4 p1, p2;
 };

@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include "glm/glm.hpp"
+#include <glm/gtc/matrix_transform.hpp>
 #include "primitive.h"
 
 class Uncopyable
@@ -22,7 +23,9 @@ protected:
 struct shape
 { // Виртуальный базовый класс "фигура"
 	std::vector<shape*> childs;
-	glm::mat3 transform=glm::mat3(1.0f);
+	glm::mat4 position = glm::mat4(1.0f);
+	glm::mat4 rotation = glm::mat4(1.0f);
+	glm::mat4 scaleM = glm::mat4(1.0f);
 	std::vector<std::unique_ptr<primitive>> visual;
 	shape(shape&) = delete;
 	shape() = default;
@@ -30,27 +33,29 @@ struct shape
 	{		
 		childs.push_back(&s);
 	}
-	void drawChild(glm::mat3 trans)
+	void drawChild(glm::mat4 trans)
 	{
+		glm::mat4 transformM = position * rotation * scaleM;
 		for (int i = 0; i < visual.size(); ++i)
 		{
-			visual[i]->drawPrimitive(trans * transform);
+			visual[i]->drawPrimitive(trans * transformM);
 		}
 		for (int i = 0; i < childs.size(); ++i)
 		{
-			childs[i]->drawChild(trans*transform);
+			childs[i]->drawChild(trans*transformM);
 		}
 	}
-	void transform(glm::mat3 trans)
+	void translate(glm::mat4 trans)
 	{
-		transform = trans * transform;
+		position = trans*position;
+	}
+	void rotate(glm::mat4 trans)
+	{
+		rotation = trans * rotation;
+	}
+	void scale(glm::mat4 trans)
+	{
+		scaleM = trans * scaleM;
 	}
 };
 
-void shape_refresh() // Перерисовка всех фигур на экране
-{
-	//gScreen.screen_clear();
-	//for (auto p : shape::shapes)
-	//	p->draw(); //Динамическое связывание!!!
-	//gScreen.screen_refresh();
-}

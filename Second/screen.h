@@ -48,7 +48,7 @@ public:
 	}
 	bool on_screen(int a, int b) // проверка попадания точки на экран
 	{
-		return (0 <= a && a < XMAX && 0 <= b && b < YMAX) ? true : throw CantPutPoint("Can't put point at position", a, b);
+		return (0 <= a && a < XMAX && 0 <= b && b < YMAX);// ? true : throw CantPutPoint("Can't put point at position", a, b);
 	}
 	void put_point(int a, int b)
 	{
