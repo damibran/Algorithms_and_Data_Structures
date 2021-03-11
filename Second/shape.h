@@ -12,7 +12,7 @@ protected:
 	Uncopyable() = default;
 	~Uncopyable() = default;
 
-	Uncopyable(const Uncopyable&)=delete;
+	Uncopyable(const Uncopyable&) = delete;
 	Uncopyable(const Uncopyable&&) = delete;
 	Uncopyable& operator=(const Uncopyable&) = delete;
 	Uncopyable& operator=(const Uncopyable&&) = delete;
@@ -26,11 +26,11 @@ struct shape
 	glm::mat4 position = glm::mat4(1.0f);
 	glm::mat4 rotation = glm::mat4(1.0f);
 	glm::mat4 scaleM = glm::mat4(1.0f);
-	std::vector<std::unique_ptr<primitive>> visual;
+	std::vector<primitive*> visual;
 	shape(shape&) = delete;
 	shape() = default;
 	void addChild(shape& s)
-	{		
+	{
 		childs.push_back(&s);
 	}
 	void drawChild(glm::mat4 trans)
@@ -42,12 +42,12 @@ struct shape
 		}
 		for (int i = 0; i < childs.size(); ++i)
 		{
-			childs[i]->drawChild(trans*transformM);
+			childs[i]->drawChild(trans * transformM);
 		}
 	}
 	void translate(glm::mat4 trans)
 	{
-		position = trans*position;
+		position = trans * position;
 	}
 	void rotate(glm::mat4 trans)
 	{

@@ -25,7 +25,7 @@ private:
 class edge : public  primitive
 {
 public:
-	edge(glm::vec2 _p1, glm::vec2 _p2) : p1(glm::vec4(_p1.x, _p1.y, 1,1)), p2(glm::vec4(_p2.x, _p2.y, 1,1)) {}
+	edge(glm::vec2 _p1, glm::vec2 _p2) : p1(glm::vec4(_p1.x, _p1.y, 1, 1)), p2(glm::vec4(_p2.x, _p2.y, 1, 1)) {}
 	virtual void drawPrimitive(glm::mat4 trans)
 	{
 		int x0 = (trans * p1)[0];

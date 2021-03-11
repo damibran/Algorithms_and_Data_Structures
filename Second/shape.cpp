@@ -12,25 +12,28 @@ int main()
 	//== 1.Объявление набора фигур ==
 	shape worldObj;
 
-	std::vector<std::unique_ptr<primitive>> t;
-	t.emplace_back(new edge({ -5,5 }, { 5,5 }));
-	t.emplace_back(new edge({ 5,5 }, { 5,-5 }));
-	t.emplace_back(new edge({ 5,-5 }, { -5,-5 }));
-	t.emplace_back(new edge({ -5,-5 }, { -5,5 }));
+	std::vector<edge> recBuff = {
+		{{ -5,5 }, { 5,5 }},
+		{{ 5,5 }, { 5,-5 }},
+		{{ 5,-5 }, { -5,-5 }},
+		{{ -5,-5 }, { -5,5 } }
+	};
 
-	rectangle rec(std::move(t));
+
+	rectangle rec;
+	rec.setBuffer(recBuff);
 
 	glm::mat3 viewM(1.0f);
-	
+
 	worldObj.addChild(rec);
-	
+
 	auto tp1 = std::chrono::system_clock::now();
 	auto tp2 = std::chrono::system_clock::now();
 
 	rec.translate(glm::translate(glm::mat4(1.0f), glm::vec3(15, 15, 0)));
 	rec.scale(glm::mat4(3));
 
-	while (1) 
+	while (1)
 	{
 		tp2 = std::chrono::system_clock::now();
 		std::chrono::duration<float> elpasedTime = tp2 - tp1;
@@ -40,7 +43,7 @@ int main()
 		gScreen.screen_clear();
 		time_t ltime;
 		time(&ltime);
-		rec.rotate(glm::rotate(glm::mat4(1.0f),(float) ltime*deltaTime/1000000000, glm::vec3(0, 0, 1)));
+		rec.rotate(glm::rotate(glm::mat4(1.0f), 3 * deltaTime, glm::vec3(0, 0, 1)));
 
 		worldObj.drawChild(viewM);
 

@@ -8,7 +8,7 @@ class Screen
 public:
 	int XMAX;
 	int YMAX;
-	Screen(int Width,int Height)
+	Screen(int Width, int Height)
 	{
 		hConsle = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
 		dwBytesWritten = 0;
@@ -52,7 +52,7 @@ public:
 	}
 	void put_point(int a, int b)
 	{
-		if (on_screen(a, b)) screen[(YMAX-b) * XMAX + a] = black;
+		if (on_screen(a, b)) screen[(YMAX - b) * XMAX + a] = black;
 	}
 
 private:
@@ -60,4 +60,4 @@ private:
 	DWORD dwBytesWritten;
 	wchar_t* screen;
 	enum color { black = '@', white = ' ' };
-}gScreen(60,60);
+}gScreen(60, 60);
