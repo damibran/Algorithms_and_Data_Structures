@@ -1,6 +1,7 @@
 #pragma once
 #include "screen.h"
 #include <vector>
+#include <memory>
 #include "glm/glm.hpp"
 #include "primitive.h"
 
@@ -20,11 +21,13 @@ protected:
 //== 2. Библиотека фигур ==
 struct shape
 { // Виртуальный базовый класс "фигура"
-	std::vector<shape> childs;
+	std::vector<std::unique_ptr<shape>> childs;
 	glm::mat3 transform=glm::mat3(1.0f);
-	std::vector<std::shared_ptr<primitive>> visual;
+	std::vector<std::unique_ptr<primitive>> visual;
+	shape(shape&) = delete;
+	shape() = default;
 	void addChild(shape& s)
-	{		childs.push_back(s);	}
+	{		childs.push_back(std::unique_ptr<shape>(&s));	}
 	void drawChild(glm::mat3 trans)
 	{
 		for (int i = 0; i < visual.size(); ++i)
@@ -33,7 +36,7 @@ struct shape
 		}
 		for (int i = 0; i < childs.size(); ++i)
 		{
-			childs[i].drawChild(trans*transform);
+			childs[i]->drawChild(trans*transform);
 		}
 	}
 };
